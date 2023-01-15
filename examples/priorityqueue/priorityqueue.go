@@ -5,8 +5,8 @@
 package main
 
 import (
-	pq "github.com/emirpasic/gods/queues/priorityqueue"
-	"github.com/emirpasic/gods/utils"
+	pq "github.com/ugurcsen/gods-generic/queues/priorityqueue"
+	"github.com/ugurcsen/gods-generic/utils"
 )
 
 // Element is an entry in the priority queue

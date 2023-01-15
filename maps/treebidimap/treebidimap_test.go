@@ -7,7 +7,7 @@ package treebidimap
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/emirpasic/gods/utils"
+	"github.com/ugurcsen/gods-generic/utils"
 	"strings"
 	"testing"
 )
@@ -630,7 +630,7 @@ func TestMapString(t *testing.T) {
 	}
 }
 
-//noinspection GoBoolExpressions
+// noinspection GoBoolExpressions
 func assertSerialization(m *Map, txt string, t *testing.T) {
 	if actualValue := m.Keys(); false ||
 		actualValue[0].(string) != "a" ||

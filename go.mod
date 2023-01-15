@@ -1,3 +1,3 @@
-module github.com/emirpasic/gods
+module github.com/ugurcsen/gods-generic
 
-go 1.2
+go 1.18

@@ -4,7 +4,7 @@
 
 package main
 
-import lls "github.com/emirpasic/gods/stacks/linkedliststack"
+import lls "github.com/ugurcsen/gods-generic/stacks/linkedliststack"
 
 // LinkedListStackExample to demonstrate basic usage of LinkedListStack
 func main() {

@@ -6,7 +6,7 @@ package avltree
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/emirpasic/gods/utils"
+	"github.com/ugurcsen/gods-generic/utils"
 	"strings"
 	"testing"
 )

@@ -4,7 +4,7 @@
 
 package treebidimap
 
-import "github.com/emirpasic/gods/containers"
+import "github.com/ugurcsen/gods-generic/containers"
 
 // Assert Enumerable implementation
 var _ containers.EnumerableWithKey = (*Map)(nil)

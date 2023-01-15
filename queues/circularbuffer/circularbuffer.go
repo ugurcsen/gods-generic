@@ -15,7 +15,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/emirpasic/gods/queues"
+	"github.com/ugurcsen/gods-generic/queues"
 )
 
 // Assert Queue implementation

@@ -5,8 +5,8 @@
 package treeset
 
 import (
-	"github.com/emirpasic/gods/containers"
-	rbt "github.com/emirpasic/gods/trees/redblacktree"
+	"github.com/ugurcsen/gods-generic/containers"
+	rbt "github.com/ugurcsen/gods-generic/trees/redblacktree"
 )
 
 // Assert Enumerable implementation

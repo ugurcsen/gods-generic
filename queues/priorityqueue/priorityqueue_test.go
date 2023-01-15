@@ -7,7 +7,7 @@ package priorityqueue
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/emirpasic/gods/utils"
+	"github.com/ugurcsen/gods-generic/utils"
 	"math/rand"
 	"strings"
 	"testing"

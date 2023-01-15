@@ -13,7 +13,7 @@ package hashmap
 
 import (
 	"fmt"
-	"github.com/emirpasic/gods/maps"
+	"github.com/ugurcsen/gods-generic/maps"
 )
 
 // Assert Map implementation
