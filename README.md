@@ -17,7 +17,7 @@ Implementation of various data structures and algorithms in Go.
     - [x] [SinglyLinkedList](#singlylinkedlist)
     - [x] [DoublyLinkedList](#doublylinkedlist)
   - [ ] [Sets](#sets)
-    - [ ] [HashSet](#hashset)
+    - [x] [HashSet](#hashset)
     - [ ] [TreeSet](#treeset)
     - [ ] [LinkedHashSet](#linkedhashset)
   - [ ] [Stacks](#stacks)
