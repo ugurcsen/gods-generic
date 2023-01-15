@@ -12,10 +12,10 @@ Implementation of various data structures and algorithms in Go.
 ## Data Structures
 
 - [ ] [Containers](#containers)
-  - [ ] [Lists](#lists)
+  - [x] [Lists](#lists)
     - [x] [ArrayList](#arraylist)
     - [x] [SinglyLinkedList](#singlylinkedlist)
-    - [ ] [DoublyLinkedList](#doublylinkedlist)
+    - [x] [DoublyLinkedList](#doublylinkedlist)
   - [ ] [Sets](#sets)
     - [ ] [HashSet](#hashset)
     - [ ] [TreeSet](#treeset)
