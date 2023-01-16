@@ -19,11 +19,11 @@ import (
 )
 
 // Assert Queue implementation
-var _ queues.Queue = (*Queue)(nil)
+var _ queues.Queue[int] = (*Queue[int])(nil)
 
 // Queue holds values in a slice.
-type Queue struct {
-	values  []interface{}
+type Queue[T comparable] struct {
+	values  []T
 	start   int
 	end     int
 	full    bool
@@ -33,17 +33,17 @@ type Queue struct {
 
 // New instantiates a new empty queue with the specified size of maximum number of elements that it can hold.
 // This max size of the buffer cannot be changed.
-func New(maxSize int) *Queue {
+func New[T comparable](maxSize int) *Queue[T] {
 	if maxSize < 1 {
 		panic("Invalid maxSize, should be at least 1")
 	}
-	queue := &Queue{maxSize: maxSize}
+	queue := &Queue[T]{maxSize: maxSize}
 	queue.Clear()
 	return queue
 }
 
 // Enqueue adds a value to the end of the queue
-func (queue *Queue) Enqueue(value interface{}) {
+func (queue *Queue[T]) Enqueue(value T) {
 	if queue.Full() {
 		queue.Dequeue()
 	}
@@ -61,15 +61,17 @@ func (queue *Queue) Enqueue(value interface{}) {
 
 // Dequeue removes first element of the queue and returns it, or nil if queue is empty.
 // Second return parameter is true, unless the queue was empty and there was nothing to dequeue.
-func (queue *Queue) Dequeue() (value interface{}, ok bool) {
+func (queue *Queue[T]) Dequeue() (value T, ok bool) {
+	var empty T
+
 	if queue.Empty() {
-		return nil, false
+		return empty, false
 	}
 
 	value, ok = queue.values[queue.start], true
 
-	if value != nil {
-		queue.values[queue.start] = nil
+	if value != empty {
+		queue.values[queue.start] = empty
 		queue.start = queue.start + 1
 		if queue.start >= queue.maxSize {
 			queue.start = 0
@@ -84,31 +86,32 @@ func (queue *Queue) Dequeue() (value interface{}, ok bool) {
 
 // Peek returns first element of the queue without removing it, or nil if queue is empty.
 // Second return parameter is true, unless the queue was empty and there was nothing to peek.
-func (queue *Queue) Peek() (value interface{}, ok bool) {
+func (queue *Queue[T]) Peek() (value T, ok bool) {
 	if queue.Empty() {
-		return nil, false
+		var empty T
+		return empty, false
 	}
 	return queue.values[queue.start], true
 }
 
 // Empty returns true if queue does not contain any elements.
-func (queue *Queue) Empty() bool {
+func (queue *Queue[T]) Empty() bool {
 	return queue.Size() == 0
 }
 
 // Full returns true if the queue is full, i.e. has reached the maximum number of elements that it can hold.
-func (queue *Queue) Full() bool {
+func (queue *Queue[T]) Full() bool {
 	return queue.Size() == queue.maxSize
 }
 
 // Size returns number of elements within the queue.
-func (queue *Queue) Size() int {
+func (queue *Queue[T]) Size() int {
 	return queue.size
 }
 
 // Clear removes all elements from the queue.
-func (queue *Queue) Clear() {
-	queue.values = make([]interface{}, queue.maxSize, queue.maxSize)
+func (queue *Queue[T]) Clear() {
+	queue.values = make([]T, queue.maxSize, queue.maxSize)
 	queue.start = 0
 	queue.end = 0
 	queue.full = false
@@ -116,8 +119,8 @@ func (queue *Queue) Clear() {
 }
 
 // Values returns all elements in the queue (FIFO order).
-func (queue *Queue) Values() []interface{} {
-	values := make([]interface{}, queue.Size(), queue.Size())
+func (queue *Queue[T]) Values() []T {
+	values := make([]T, queue.Size(), queue.Size())
 	for i := 0; i < queue.Size(); i++ {
 		values[i] = queue.values[(queue.start+i)%queue.maxSize]
 	}
@@ -125,7 +128,7 @@ func (queue *Queue) Values() []interface{} {
 }
 
 // String returns a string representation of container
-func (queue *Queue) String() string {
+func (queue *Queue[T]) String() string {
 	str := "CircularBuffer\n"
 	var values []string
 	for _, value := range queue.Values() {
@@ -136,11 +139,11 @@ func (queue *Queue) String() string {
 }
 
 // Check that the index is within bounds of the list
-func (queue *Queue) withinRange(index int) bool {
+func (queue *Queue[T]) withinRange(index int) bool {
 	return index >= 0 && index < queue.size
 }
 
-func (queue *Queue) calculateSize() int {
+func (queue *Queue[T]) calculateSize() int {
 	if queue.end < queue.start {
 		return queue.maxSize - queue.start + queue.end
 	} else if queue.end == queue.start {

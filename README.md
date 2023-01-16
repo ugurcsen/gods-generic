@@ -37,7 +37,7 @@ Implementation of various data structures and algorithms in Go.
   - [ ] [Queues](#queues)
     - [x] [LinkedListQueue](#linkedlistqueue)
     - [x] [ArrayQueue](#arrayqueue)
-    - [ ] [CircularBuffer](#circularbuffer)
+    - [x] [CircularBuffer](#circularbuffer)
     - [ ] [PriorityQueue](#priorityqueue)
 - [ ] [Functions](#functions)
     - [x] [Comparator](#comparator)
