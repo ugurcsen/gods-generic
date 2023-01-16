@@ -5,6 +5,7 @@
 package utils
 
 import (
+	"reflect"
 	"strings"
 	"testing"
 )
@@ -99,6 +100,23 @@ func TestToStringOther(t *testing.T) {
 	}
 
 	if actualValue, expectedValue := ToString(T{1, "abc"}), "{id:1 name:abc}"; actualValue != expectedValue {
+		t.Errorf("Got %v expected %v", actualValue, expectedValue)
+	}
+}
+
+func TestGenericToInterfaceSlice(t *testing.T) {
+	value := []int{1, 2, 3}
+	if actualValue, expectedValue := GenericToInterfaceSlice(value), []interface{}{1, 2, 3}; !reflect.DeepEqual(actualValue, expectedValue) {
+		t.Errorf("Got %v expected %v", actualValue, expectedValue)
+	}
+
+	value2 := []string{"a", "b", "c"}
+	if actualValue, expectedValue := GenericToInterfaceSlice(value2), []interface{}{"a", "b", "c"}; !reflect.DeepEqual(actualValue, expectedValue) {
+		t.Errorf("Got %v expected %v", actualValue, expectedValue)
+	}
+
+	value3 := []interface{}{1, "a"}
+	if actualValue, expectedValue := GenericToInterfaceSlice(value3), []interface{}{1, "a"}; !reflect.DeepEqual(actualValue, expectedValue) {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
 }

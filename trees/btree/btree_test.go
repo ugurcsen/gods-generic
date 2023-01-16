@@ -7,17 +7,10 @@ package btree
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/ugurcsen/gods-generic/utils"
 	"strings"
 	"testing"
 )
-
-func TToInterfaceSlice[T any](t []T) []interface{} {
-	s := make([]interface{}, len(t))
-	for i, v := range t {
-		s[i] = v
-	}
-	return s
-}
 
 func TestBTreeGet1(t *testing.T) {
 	tree := NewWithNumberComparator[string](3)
@@ -715,10 +708,10 @@ func TestBTreeIteratorValuesAndKeys(t *testing.T) {
 	tree.Put(7, "g")
 	tree.Put(2, "b")
 	tree.Put(1, "x") // override
-	if actualValue, expectedValue := fmt.Sprintf("%d%d%d%d%d%d%d", TToInterfaceSlice(tree.Keys())...), "1234567"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%d%d%d%d%d%d%d", utils.GenericToInterfaceSlice(tree.Keys())...), "1234567"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
-	if actualValue, expectedValue := fmt.Sprintf("%s%s%s%s%s%s%s", TToInterfaceSlice(tree.Values())...), "xbcdefg"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%s%s%s%s%s%s%s", utils.GenericToInterfaceSlice(tree.Values())...), "xbcdefg"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
 	if actualValue := tree.Size(); actualValue != 7 {

@@ -7,18 +7,10 @@ package arraystack
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/ugurcsen/gods-generic/utils"
 	"strings"
 	"testing"
 )
-
-func TToInterfaceSlice[T comparable](t []T) []interface{} {
-	valuesInterface := make([]interface{}, len(t))
-	for i, value := range t {
-		valuesInterface[i] = value
-	}
-
-	return valuesInterface
-}
 
 func TestStackPush(t *testing.T) {
 	stack := New[int]()
@@ -365,7 +357,7 @@ func TestStackSerialization(t *testing.T) {
 
 	var err error
 	assert := func() {
-		if actualValue, expectedValue := fmt.Sprintf("%s%s%s", TToInterfaceSlice(stack.Values())...), "cba"; actualValue != expectedValue {
+		if actualValue, expectedValue := fmt.Sprintf("%s%s%s", utils.GenericToInterfaceSlice(stack.Values())...), "cba"; actualValue != expectedValue {
 			t.Errorf("Got %v expected %v", actualValue, expectedValue)
 		}
 		if actualValue, expectedValue := stack.Size(), 3; actualValue != expectedValue {

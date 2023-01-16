@@ -7,17 +7,10 @@ package treeset
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/ugurcsen/gods-generic/utils"
 	"strings"
 	"testing"
 )
-
-func TToInterfaceSlice[T any](t []T) []interface{} {
-	s := make([]interface{}, len(t))
-	for i, v := range t {
-		s[i] = v
-	}
-	return s
-}
 
 func TestSetNew(t *testing.T) {
 	set := NewWithNumberComparator(2, 1)
@@ -46,7 +39,7 @@ func TestSetAdd(t *testing.T) {
 	if actualValue := set.Size(); actualValue != 3 {
 		t.Errorf("Got %v expected %v", actualValue, 3)
 	}
-	if actualValue, expectedValue := fmt.Sprintf("%d%d%d", TToInterfaceSlice(set.Values())...), "123"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%d%d%d", utils.GenericToInterfaceSlice(set.Values())...), "123"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
 }

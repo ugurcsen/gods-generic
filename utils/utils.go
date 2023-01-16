@@ -45,3 +45,12 @@ func ToString(value interface{}) string {
 		return fmt.Sprintf("%+v", value)
 	}
 }
+
+func GenericToInterfaceSlice[T any](t []T) []interface{} {
+	valuesInterface := make([]interface{}, len(t))
+	for i, value := range t {
+		valuesInterface[i] = value
+	}
+
+	return valuesInterface
+}

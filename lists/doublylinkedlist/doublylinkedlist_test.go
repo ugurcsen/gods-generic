@@ -182,7 +182,7 @@ func TestListValues(t *testing.T) {
 	list := New[string]()
 	list.Add("a")
 	list.Add("b", "c")
-	if actualValue, expectedValue := fmt.Sprintf("%s%s%s", TToInterfaceSlice(list.Values())...), "abc"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%s%s%s", utils.GenericToInterfaceSlice(list.Values())...), "abc"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
 }
@@ -226,7 +226,7 @@ func TestListInsert(t *testing.T) {
 	if actualValue := list.Size(); actualValue != 4 {
 		t.Errorf("Got %v expected %v", actualValue, 4)
 	}
-	if actualValue, expectedValue := fmt.Sprintf("%s%s%s%s", TToInterfaceSlice(list.Values())...), "abcd"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%s%s%s%s", utils.GenericToInterfaceSlice(list.Values())...), "abcd"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
 }
@@ -247,12 +247,12 @@ func TestListSet(t *testing.T) {
 	if actualValue := list.Size(); actualValue != 3 {
 		t.Errorf("Got %v expected %v", actualValue, 3)
 	}
-	if actualValue, expectedValue := fmt.Sprintf("%s%s%s", TToInterfaceSlice(list.Values())...), "abbc"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%s%s%s", utils.GenericToInterfaceSlice(list.Values())...), "abbc"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
 	list.Set(2, "cc") // last to first traversal
 	list.Set(0, "aa") // first to last traversal
-	if actualValue, expectedValue := fmt.Sprintf("%s%s%s", TToInterfaceSlice(list.Values())...), "aabbcc"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%s%s%s", utils.GenericToInterfaceSlice(list.Values())...), "aabbcc"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
 }
@@ -640,7 +640,7 @@ func TestListSerialization(t *testing.T) {
 
 	var err error
 	assert := func() {
-		if actualValue, expectedValue := fmt.Sprintf("%s%s%s", TToInterfaceSlice(list.Values())...), "abc"; actualValue != expectedValue {
+		if actualValue, expectedValue := fmt.Sprintf("%s%s%s", utils.GenericToInterfaceSlice(list.Values())...), "abc"; actualValue != expectedValue {
 			t.Errorf("Got %v expected %v", actualValue, expectedValue)
 		}
 		if actualValue, expectedValue := list.Size(), 3; actualValue != expectedValue {
@@ -830,12 +830,4 @@ func BenchmarkDoublyLinkedListRemove100000(b *testing.B) {
 	}
 	b.StartTimer()
 	benchmarkRemove(b, list, size)
-}
-
-func TToInterfaceSlice[T any](t []T) []interface{} {
-	s := make([]interface{}, len(t))
-	for i, v := range t {
-		s[i] = v
-	}
-	return s
 }

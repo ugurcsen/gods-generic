@@ -12,15 +12,6 @@ import (
 	"testing"
 )
 
-func TToAnySlice[T comparable](t []T) []interface{} {
-	valuesInterface := make([]interface{}, len(t))
-	for i, value := range t {
-		valuesInterface[i] = value
-	}
-
-	return valuesInterface
-}
-
 func TestListNew(t *testing.T) {
 	list1 := New[string]()
 
@@ -200,7 +191,7 @@ func TestListValues(t *testing.T) {
 	list.Add("a")
 	list.Add("b", "c")
 
-	if actualValue, expectedValue := fmt.Sprintf("%s%s%s", TToAnySlice(list.Values())...), "abc"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%s%s%s", utils.GenericToInterfaceSlice(list.Values())...), "abc"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
 }
@@ -217,7 +208,7 @@ func TestListInsert(t *testing.T) {
 	if actualValue := list.Size(); actualValue != 4 {
 		t.Errorf("Got %v expected %v", actualValue, 4)
 	}
-	if actualValue, expectedValue := fmt.Sprintf("%s%s%s%s", TToAnySlice(list.Values())...), "abcd"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%s%s%s%s", utils.GenericToInterfaceSlice(list.Values())...), "abcd"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
 }
@@ -238,7 +229,7 @@ func TestListSet(t *testing.T) {
 	if actualValue := list.Size(); actualValue != 3 {
 		t.Errorf("Got %v expected %v", actualValue, 3)
 	}
-	if actualValue, expectedValue := fmt.Sprintf("%s%s%s", TToAnySlice(list.Values())...), "abbc"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%s%s%s", utils.GenericToInterfaceSlice(list.Values())...), "abbc"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
 }
@@ -626,7 +617,7 @@ func TestListSerialization(t *testing.T) {
 
 	var err error
 	assert := func() {
-		if actualValue, expectedValue := fmt.Sprintf("%s%s%s", TToAnySlice(list.Values())...), "abc"; actualValue != expectedValue {
+		if actualValue, expectedValue := fmt.Sprintf("%s%s%s", utils.GenericToInterfaceSlice(list.Values())...), "abc"; actualValue != expectedValue {
 			t.Errorf("Got %v expected %v", actualValue, expectedValue)
 		}
 		if actualValue, expectedValue := list.Size(), 3; actualValue != expectedValue {

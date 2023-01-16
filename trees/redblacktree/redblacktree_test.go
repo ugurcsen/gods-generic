@@ -12,14 +12,6 @@ import (
 	"testing"
 )
 
-func TToInterfaceSlice[T any](t []T) []interface{} {
-	s := make([]interface{}, len(t))
-	for i, v := range t {
-		s[i] = v
-	}
-	return s
-}
-
 func TestRedBlackTreeGet(t *testing.T) {
 	tree := NewWithNumberComparator[string]()
 
@@ -80,10 +72,10 @@ func TestRedBlackTreePut(t *testing.T) {
 	if actualValue := tree.Size(); actualValue != 7 {
 		t.Errorf("Got %v expected %v", actualValue, 7)
 	}
-	if actualValue, expectedValue := fmt.Sprintf("%d%d%d%d%d%d%d", TToInterfaceSlice(tree.Keys())...), "1234567"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%d%d%d%d%d%d%d", utils.GenericToInterfaceSlice(tree.Keys())...), "1234567"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
-	if actualValue, expectedValue := fmt.Sprintf("%s%s%s%s%s%s%s", TToInterfaceSlice(tree.Values())...), "abcdefg"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%s%s%s%s%s%s%s", utils.GenericToInterfaceSlice(tree.Values())...), "abcdefg"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
 
@@ -124,13 +116,13 @@ func TestRedBlackTreeRemove(t *testing.T) {
 	tree.Remove(8)
 	tree.Remove(5)
 
-	if actualValue, expectedValue := fmt.Sprintf("%d%d%d%d", TToInterfaceSlice(tree.Keys())...), "1234"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%d%d%d%d", utils.GenericToInterfaceSlice(tree.Keys())...), "1234"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
-	if actualValue, expectedValue := fmt.Sprintf("%s%s%s%s", TToInterfaceSlice(tree.Values())...), "abcd"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%s%s%s%s", utils.GenericToInterfaceSlice(tree.Values())...), "abcd"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
-	if actualValue, expectedValue := fmt.Sprintf("%s%s%s%s", TToInterfaceSlice(tree.Values())...), "abcd"; actualValue != expectedValue {
+	if actualValue, expectedValue := fmt.Sprintf("%s%s%s%s", utils.GenericToInterfaceSlice(tree.Values())...), "abcd"; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v", actualValue, expectedValue)
 	}
 	if actualValue := tree.Size(); actualValue != 4 {
