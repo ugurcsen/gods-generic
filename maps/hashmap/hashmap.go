@@ -17,48 +17,48 @@ import (
 )
 
 // Assert Map implementation
-var _ maps.Map = (*Map)(nil)
+var _ maps.Map[int, int] = (*Map[int, int])(nil)
 
 // Map holds the elements in go's native map
-type Map struct {
-	m map[interface{}]interface{}
+type Map[K, T comparable] struct {
+	m map[K]T
 }
 
 // New instantiates a hash map.
-func New() *Map {
-	return &Map{m: make(map[interface{}]interface{})}
+func New[K, T comparable]() *Map[K, T] {
+	return &Map[K, T]{m: make(map[K]T)}
 }
 
 // Put inserts element into the map.
-func (m *Map) Put(key interface{}, value interface{}) {
+func (m *Map[K, T]) Put(key K, value T) {
 	m.m[key] = value
 }
 
 // Get searches the element in the map by key and returns its value or nil if key is not found in map.
 // Second return parameter is true if key was found, otherwise false.
-func (m *Map) Get(key interface{}) (value interface{}, found bool) {
+func (m *Map[K, T]) Get(key K) (value T, found bool) {
 	value, found = m.m[key]
 	return
 }
 
 // Remove removes the element from the map by key.
-func (m *Map) Remove(key interface{}) {
+func (m *Map[K, T]) Remove(key K) {
 	delete(m.m, key)
 }
 
 // Empty returns true if map does not contain any elements
-func (m *Map) Empty() bool {
+func (m *Map[K, T]) Empty() bool {
 	return m.Size() == 0
 }
 
 // Size returns number of elements in the map.
-func (m *Map) Size() int {
+func (m *Map[K, T]) Size() int {
 	return len(m.m)
 }
 
 // Keys returns all keys (random order).
-func (m *Map) Keys() []interface{} {
-	keys := make([]interface{}, m.Size())
+func (m *Map[K, T]) Keys() []K {
+	keys := make([]K, m.Size())
 	count := 0
 	for key := range m.m {
 		keys[count] = key
@@ -68,8 +68,8 @@ func (m *Map) Keys() []interface{} {
 }
 
 // Values returns all values (random order).
-func (m *Map) Values() []interface{} {
-	values := make([]interface{}, m.Size())
+func (m *Map[K, T]) Values() []T {
+	values := make([]T, m.Size())
 	count := 0
 	for _, value := range m.m {
 		values[count] = value
@@ -79,12 +79,12 @@ func (m *Map) Values() []interface{} {
 }
 
 // Clear removes all elements from the map.
-func (m *Map) Clear() {
-	m.m = make(map[interface{}]interface{})
+func (m *Map[K, T]) Clear() {
+	m.m = make(map[K]T)
 }
 
 // String returns a string representation of container
-func (m *Map) String() string {
+func (m *Map[K, T]) String() string {
 	str := "HashMap\n"
 	str += fmt.Sprintf("%v", m.m)
 	return str
