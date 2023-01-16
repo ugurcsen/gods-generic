@@ -30,7 +30,7 @@ Implementation of various data structures and algorithms in Go.
     - [ ] [HashBidiMap](#hashbidimap)
     - [ ] [TreeBidiMap](#treebidimap)
   - [ ] [Trees](#trees)
-    - [ ] [RedBlackTree](#redblacktree)
+    - [x] [RedBlackTree](#redblacktree)
     - [ ] [AVLTree](#avltree)
     - [ ] [BTree](#btree)
     - [ ] [BinaryHeap](#binaryheap)

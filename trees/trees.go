@@ -12,8 +12,8 @@ package trees
 import "github.com/ugurcsen/gods-generic/containers"
 
 // Tree interface that all trees implement
-type Tree interface {
-	containers.Container
+type Tree[T comparable] interface {
+	containers.Container[T]
 	// Empty() bool
 	// Size() int
 	// Clear()

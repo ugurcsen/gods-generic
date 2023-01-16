@@ -18,7 +18,7 @@ import (
 )
 
 // Assert Tree implementation
-var _ trees.Tree = (*Tree)(nil)
+var _ trees.Tree[int] = (*Tree[int, int])(nil)
 
 type color bool
 
@@ -27,45 +27,45 @@ const (
 )
 
 // Tree holds elements of the red-black tree
-type Tree struct {
-	Root       *Node
+type Tree[K, T comparable] struct {
+	Root       *Node[K, T]
 	size       int
 	Comparator utils.Comparator
 }
 
 // Node is a single element within the tree
-type Node struct {
-	Key    interface{}
-	Value  interface{}
+type Node[K, T comparable] struct {
+	Key    K
+	Value  T
 	color  color
-	Left   *Node
-	Right  *Node
-	Parent *Node
+	Left   *Node[K, T]
+	Right  *Node[K, T]
+	Parent *Node[K, T]
 }
 
 // NewWith instantiates a red-black tree with the custom comparator.
-func NewWith(comparator utils.Comparator) *Tree {
-	return &Tree{Comparator: comparator}
+func NewWith[K, T comparable](comparator utils.Comparator) *Tree[K, T] {
+	return &Tree[K, T]{Comparator: comparator}
 }
 
 // NewWithIntComparator instantiates a red-black tree with the IntComparator, i.e. keys are of type int.
-func NewWithIntComparator() *Tree {
-	return &Tree{Comparator: utils.IntComparator}
+func NewWithIntComparator[T comparable]() *Tree[int, T] {
+	return &Tree[int, T]{Comparator: utils.IntComparator}
 }
 
 // NewWithStringComparator instantiates a red-black tree with the StringComparator, i.e. keys are of type string.
-func NewWithStringComparator() *Tree {
-	return &Tree{Comparator: utils.StringComparator}
+func NewWithStringComparator[T comparable]() *Tree[string, T] {
+	return &Tree[string, T]{Comparator: utils.StringComparator}
 }
 
 // Put inserts node into the tree.
 // Key should adhere to the comparator's type assertion, otherwise method panics.
-func (tree *Tree) Put(key interface{}, value interface{}) {
-	var insertedNode *Node
+func (tree *Tree[K, T]) Put(key K, value T) {
+	var insertedNode *Node[K, T]
 	if tree.Root == nil {
 		// Assert key is of comparator's type for initial tree
 		tree.Comparator(key, key)
-		tree.Root = &Node{Key: key, Value: value, color: red}
+		tree.Root = &Node[K, T]{Key: key, Value: value, color: red}
 		insertedNode = tree.Root
 	} else {
 		node := tree.Root
@@ -79,7 +79,7 @@ func (tree *Tree) Put(key interface{}, value interface{}) {
 				return
 			case compare < 0:
 				if node.Left == nil {
-					node.Left = &Node{Key: key, Value: value, color: red}
+					node.Left = &Node[K, T]{Key: key, Value: value, color: red}
 					insertedNode = node.Left
 					loop = false
 				} else {
@@ -87,7 +87,7 @@ func (tree *Tree) Put(key interface{}, value interface{}) {
 				}
 			case compare > 0:
 				if node.Right == nil {
-					node.Right = &Node{Key: key, Value: value, color: red}
+					node.Right = &Node[K, T]{Key: key, Value: value, color: red}
 					insertedNode = node.Right
 					loop = false
 				} else {
@@ -104,24 +104,25 @@ func (tree *Tree) Put(key interface{}, value interface{}) {
 // Get searches the node in the tree by key and returns its value or nil if key is not found in tree.
 // Second return parameter is true if key was found, otherwise false.
 // Key should adhere to the comparator's type assertion, otherwise method panics.
-func (tree *Tree) Get(key interface{}) (value interface{}, found bool) {
+func (tree *Tree[K, T]) Get(key K) (value T, found bool) {
 	node := tree.lookup(key)
 	if node != nil {
 		return node.Value, true
 	}
-	return nil, false
+	var empty T
+	return empty, false
 }
 
 // GetNode searches the node in the tree by key and returns its node or nil if key is not found in tree.
 // Key should adhere to the comparator's type assertion, otherwise method panics.
-func (tree *Tree) GetNode(key interface{}) *Node {
+func (tree *Tree[K, T]) GetNode(key K) *Node[K, T] {
 	return tree.lookup(key)
 }
 
 // Remove remove the node from the tree by key.
 // Key should adhere to the comparator's type assertion, otherwise method panics.
-func (tree *Tree) Remove(key interface{}) {
-	var child *Node
+func (tree *Tree[K, T]) Remove(key K) {
+	var child *Node[K, T]
 	node := tree.lookup(key)
 	if node == nil {
 		return
@@ -151,18 +152,18 @@ func (tree *Tree) Remove(key interface{}) {
 }
 
 // Empty returns true if tree does not contain any nodes
-func (tree *Tree) Empty() bool {
+func (tree *Tree[K, T]) Empty() bool {
 	return tree.size == 0
 }
 
 // Size returns number of nodes in the tree.
-func (tree *Tree) Size() int {
+func (tree *Tree[K, T]) Size() int {
 	return tree.size
 }
 
 // Size returns the number of elements stored in the subtree.
 // Computed dynamically on each call, i.e. the subtree is traversed to count the number of the nodes.
-func (node *Node) Size() int {
+func (node *Node[K, T]) Size() int {
 	if node == nil {
 		return 0
 	}
@@ -177,8 +178,8 @@ func (node *Node) Size() int {
 }
 
 // Keys returns all keys in-order
-func (tree *Tree) Keys() []interface{} {
-	keys := make([]interface{}, tree.size)
+func (tree *Tree[K, T]) Keys() []K {
+	keys := make([]K, tree.size)
 	it := tree.Iterator()
 	for i := 0; it.Next(); i++ {
 		keys[i] = it.Key()
@@ -187,8 +188,8 @@ func (tree *Tree) Keys() []interface{} {
 }
 
 // Values returns all values in-order based on the key.
-func (tree *Tree) Values() []interface{} {
-	values := make([]interface{}, tree.size)
+func (tree *Tree[K, T]) Values() []T {
+	values := make([]T, tree.size)
 	it := tree.Iterator()
 	for i := 0; it.Next(); i++ {
 		values[i] = it.Value()
@@ -197,8 +198,8 @@ func (tree *Tree) Values() []interface{} {
 }
 
 // Left returns the left-most (min) node or nil if tree is empty.
-func (tree *Tree) Left() *Node {
-	var parent *Node
+func (tree *Tree[K, T]) Left() *Node[K, T] {
+	var parent *Node[K, T]
 	current := tree.Root
 	for current != nil {
 		parent = current
@@ -208,8 +209,8 @@ func (tree *Tree) Left() *Node {
 }
 
 // Right returns the right-most (max) node or nil if tree is empty.
-func (tree *Tree) Right() *Node {
-	var parent *Node
+func (tree *Tree[K, T]) Right() *Node[K, T] {
+	var parent *Node[K, T]
 	current := tree.Root
 	for current != nil {
 		parent = current
@@ -226,7 +227,7 @@ func (tree *Tree) Right() *Node {
 // all nodes in the tree are larger than the given node.
 //
 // Key should adhere to the comparator's type assertion, otherwise method panics.
-func (tree *Tree) Floor(key interface{}) (floor *Node, found bool) {
+func (tree *Tree[K, T]) Floor(key K) (floor *Node[K, T], found bool) {
 	found = false
 	node := tree.Root
 	for node != nil {
@@ -255,7 +256,7 @@ func (tree *Tree) Floor(key interface{}) (floor *Node, found bool) {
 // all nodes in the tree are smaller than the given node.
 //
 // Key should adhere to the comparator's type assertion, otherwise method panics.
-func (tree *Tree) Ceiling(key interface{}) (ceiling *Node, found bool) {
+func (tree *Tree[K, T]) Ceiling(key K) (ceiling *Node[K, T], found bool) {
 	found = false
 	node := tree.Root
 	for node != nil {
@@ -277,13 +278,13 @@ func (tree *Tree) Ceiling(key interface{}) (ceiling *Node, found bool) {
 }
 
 // Clear removes all nodes from the tree.
-func (tree *Tree) Clear() {
+func (tree *Tree[K, T]) Clear() {
 	tree.Root = nil
 	tree.size = 0
 }
 
 // String returns a string representation of container
-func (tree *Tree) String() string {
+func (tree *Tree[K, T]) String() string {
 	str := "RedBlackTree\n"
 	if !tree.Empty() {
 		output(tree.Root, "", true, &str)
@@ -291,11 +292,11 @@ func (tree *Tree) String() string {
 	return str
 }
 
-func (node *Node) String() string {
+func (node *Node[K, T]) String() string {
 	return fmt.Sprintf("%v", node.Key)
 }
 
-func output(node *Node, prefix string, isTail bool, str *string) {
+func output[K, T comparable](node *Node[K, T], prefix string, isTail bool, str *string) {
 	if node.Right != nil {
 		newPrefix := prefix
 		if isTail {
@@ -323,7 +324,7 @@ func output(node *Node, prefix string, isTail bool, str *string) {
 	}
 }
 
-func (tree *Tree) lookup(key interface{}) *Node {
+func (tree *Tree[K, T]) lookup(key K) *Node[K, T] {
 	node := tree.Root
 	for node != nil {
 		compare := tree.Comparator(key, node.Key)
@@ -339,21 +340,21 @@ func (tree *Tree) lookup(key interface{}) *Node {
 	return nil
 }
 
-func (node *Node) grandparent() *Node {
+func (node *Node[K, T]) grandparent() *Node[K, T] {
 	if node != nil && node.Parent != nil {
 		return node.Parent.Parent
 	}
 	return nil
 }
 
-func (node *Node) uncle() *Node {
+func (node *Node[K, T]) uncle() *Node[K, T] {
 	if node == nil || node.Parent == nil || node.Parent.Parent == nil {
 		return nil
 	}
 	return node.Parent.sibling()
 }
 
-func (node *Node) sibling() *Node {
+func (node *Node[K, T]) sibling() *Node[K, T] {
 	if node == nil || node.Parent == nil {
 		return nil
 	}
@@ -363,7 +364,7 @@ func (node *Node) sibling() *Node {
 	return node.Parent.Left
 }
 
-func (tree *Tree) rotateLeft(node *Node) {
+func (tree *Tree[K, T]) rotateLeft(node *Node[K, T]) {
 	right := node.Right
 	tree.replaceNode(node, right)
 	node.Right = right.Left
@@ -374,7 +375,7 @@ func (tree *Tree) rotateLeft(node *Node) {
 	node.Parent = right
 }
 
-func (tree *Tree) rotateRight(node *Node) {
+func (tree *Tree[K, T]) rotateRight(node *Node[K, T]) {
 	left := node.Left
 	tree.replaceNode(node, left)
 	node.Left = left.Right
@@ -385,7 +386,7 @@ func (tree *Tree) rotateRight(node *Node) {
 	node.Parent = left
 }
 
-func (tree *Tree) replaceNode(old *Node, new *Node) {
+func (tree *Tree[K, T]) replaceNode(old *Node[K, T], new *Node[K, T]) {
 	if old.Parent == nil {
 		tree.Root = new
 	} else {
@@ -400,7 +401,7 @@ func (tree *Tree) replaceNode(old *Node, new *Node) {
 	}
 }
 
-func (tree *Tree) insertCase1(node *Node) {
+func (tree *Tree[K, T]) insertCase1(node *Node[K, T]) {
 	if node.Parent == nil {
 		node.color = black
 	} else {
@@ -408,14 +409,14 @@ func (tree *Tree) insertCase1(node *Node) {
 	}
 }
 
-func (tree *Tree) insertCase2(node *Node) {
+func (tree *Tree[K, T]) insertCase2(node *Node[K, T]) {
 	if nodeColor(node.Parent) == black {
 		return
 	}
 	tree.insertCase3(node)
 }
 
-func (tree *Tree) insertCase3(node *Node) {
+func (tree *Tree[K, T]) insertCase3(node *Node[K, T]) {
 	uncle := node.uncle()
 	if nodeColor(uncle) == red {
 		node.Parent.color = black
@@ -427,7 +428,7 @@ func (tree *Tree) insertCase3(node *Node) {
 	}
 }
 
-func (tree *Tree) insertCase4(node *Node) {
+func (tree *Tree[K, T]) insertCase4(node *Node[K, T]) {
 	grandparent := node.grandparent()
 	if node == node.Parent.Right && node.Parent == grandparent.Left {
 		tree.rotateLeft(node.Parent)
@@ -439,7 +440,7 @@ func (tree *Tree) insertCase4(node *Node) {
 	tree.insertCase5(node)
 }
 
-func (tree *Tree) insertCase5(node *Node) {
+func (tree *Tree[K, T]) insertCase5(node *Node[K, T]) {
 	node.Parent.color = black
 	grandparent := node.grandparent()
 	grandparent.color = red
@@ -450,7 +451,7 @@ func (tree *Tree) insertCase5(node *Node) {
 	}
 }
 
-func (node *Node) maximumNode() *Node {
+func (node *Node[K, T]) maximumNode() *Node[K, T] {
 	if node == nil {
 		return nil
 	}
@@ -460,14 +461,14 @@ func (node *Node) maximumNode() *Node {
 	return node
 }
 
-func (tree *Tree) deleteCase1(node *Node) {
+func (tree *Tree[K, T]) deleteCase1(node *Node[K, T]) {
 	if node.Parent == nil {
 		return
 	}
 	tree.deleteCase2(node)
 }
 
-func (tree *Tree) deleteCase2(node *Node) {
+func (tree *Tree[K, T]) deleteCase2(node *Node[K, T]) {
 	sibling := node.sibling()
 	if nodeColor(sibling) == red {
 		node.Parent.color = red
@@ -481,7 +482,7 @@ func (tree *Tree) deleteCase2(node *Node) {
 	tree.deleteCase3(node)
 }
 
-func (tree *Tree) deleteCase3(node *Node) {
+func (tree *Tree[K, T]) deleteCase3(node *Node[K, T]) {
 	sibling := node.sibling()
 	if nodeColor(node.Parent) == black &&
 		nodeColor(sibling) == black &&
@@ -494,7 +495,7 @@ func (tree *Tree) deleteCase3(node *Node) {
 	}
 }
 
-func (tree *Tree) deleteCase4(node *Node) {
+func (tree *Tree[K, T]) deleteCase4(node *Node[K, T]) {
 	sibling := node.sibling()
 	if nodeColor(node.Parent) == red &&
 		nodeColor(sibling) == black &&
@@ -507,7 +508,7 @@ func (tree *Tree) deleteCase4(node *Node) {
 	}
 }
 
-func (tree *Tree) deleteCase5(node *Node) {
+func (tree *Tree[K, T]) deleteCase5(node *Node[K, T]) {
 	sibling := node.sibling()
 	if node == node.Parent.Left &&
 		nodeColor(sibling) == black &&
@@ -527,7 +528,7 @@ func (tree *Tree) deleteCase5(node *Node) {
 	tree.deleteCase6(node)
 }
 
-func (tree *Tree) deleteCase6(node *Node) {
+func (tree *Tree[K, T]) deleteCase6(node *Node[K, T]) {
 	sibling := node.sibling()
 	sibling.color = nodeColor(node.Parent)
 	node.Parent.color = black
@@ -540,7 +541,7 @@ func (tree *Tree) deleteCase6(node *Node) {
 	}
 }
 
-func nodeColor(node *Node) color {
+func nodeColor[K, T comparable](node *Node[K, T]) color {
 	if node == nil {
 		return black
 	}
