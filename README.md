@@ -22,7 +22,7 @@ Implementation of various data structures and algorithms in Go.
     - [x] [LinkedHashSet](#linkedhashset)
   - [ ] [Stacks](#stacks)
     - [ ] [LinkedListStack](#linkedliststack)
-    - [ ] [ArrayStack](#arraystack)
+    - [x] [ArrayStack](#arraystack)
   - [ ] [Maps](#maps)
     - [ ] [HashMap](#hashmap)
     - [ ] [TreeMap](#treemap)
