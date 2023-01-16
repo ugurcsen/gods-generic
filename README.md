@@ -25,7 +25,7 @@ Implementation of various data structures and algorithms in Go.
     - [x] [ArrayStack](#arraystack)
   - [ ] [Maps](#maps)
     - [x] [HashMap](#hashmap)
-    - [ ] [TreeMap](#treemap)
+    - [x] [TreeMap](#treemap)
     - [ ] [LinkedHashMap](#linkedhashmap)
     - [ ] [HashBidiMap](#hashbidimap)
     - [ ] [TreeBidiMap](#treebidimap)
