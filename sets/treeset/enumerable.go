@@ -23,7 +23,7 @@ func (set *Set[T]) Each(f func(index int, value T)) {
 // Map invokes the given function once for each element and returns a
 // container containing the values returned by the given function.
 func (set *Set[T]) Map(f func(index int, value T) T) *Set[T] {
-	newSet := &Set[T]{tree: rbt.NewWith[T, bool](set.tree.Comparator)}
+	newSet := &Set[T]{tree: rbt.NewWith[T, struct{}](set.tree.Comparator)}
 	iterator := set.Iterator()
 	for iterator.Next() {
 		newSet.Add(f(iterator.Index(), iterator.Value()))
@@ -33,7 +33,7 @@ func (set *Set[T]) Map(f func(index int, value T) T) *Set[T] {
 
 // Select returns a new container containing all elements for which the given function returns a true value.
 func (set *Set[T]) Select(f func(index int, value T) bool) *Set[T] {
-	newSet := &Set[T]{tree: rbt.NewWith[T, bool](set.tree.Comparator)}
+	newSet := &Set[T]{tree: rbt.NewWith[T, struct{}](set.tree.Comparator)}
 	iterator := set.Iterator()
 	for iterator.Next() {
 		if f(iterator.Index(), iterator.Value()) {
