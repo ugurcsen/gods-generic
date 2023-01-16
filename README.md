@@ -35,7 +35,7 @@ Implementation of various data structures and algorithms in Go.
     - [x] [BTree](#btree)
     - [x] [BinaryHeap](#binaryheap)
   - [ ] [Queues](#queues)
-    - [ ] [LinkedListQueue](#linkedlistqueue)
+    - [x] [LinkedListQueue](#linkedlistqueue)
     - [ ] [ArrayQueue](#arrayqueue)
     - [ ] [CircularBuffer](#circularbuffer)
     - [ ] [PriorityQueue](#priorityqueue)
