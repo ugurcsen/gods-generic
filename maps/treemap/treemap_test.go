@@ -55,7 +55,7 @@ func TestMapPut(t *testing.T) {
 }
 
 func TestMapMin(t *testing.T) {
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 
 	if k, v := m.Min(); k != nil || v != nil {
 		t.Errorf("Got %v->%v expected %v->%v", k, v, nil, nil)
@@ -81,7 +81,7 @@ func TestMapMin(t *testing.T) {
 }
 
 func TestMapMax(t *testing.T) {
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 
 	if k, v := m.Max(); k != nil || v != nil {
 		t.Errorf("Got %v->%v expected %v->%v", k, v, nil, nil)
@@ -107,7 +107,7 @@ func TestMapMax(t *testing.T) {
 }
 
 func TestMapClear(t *testing.T) {
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	m.Put(5, "e")
 	m.Put(6, "f")
 	m.Put(7, "g")
@@ -122,7 +122,7 @@ func TestMapClear(t *testing.T) {
 }
 
 func TestMapRemove(t *testing.T) {
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	m.Put(5, "e")
 	m.Put(6, "f")
 	m.Put(7, "g")
@@ -189,7 +189,7 @@ func TestMapRemove(t *testing.T) {
 }
 
 func TestMapFloor(t *testing.T) {
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	m.Put(7, "g")
 	m.Put(3, "c")
 	m.Put(1, "a")
@@ -217,7 +217,7 @@ func TestMapFloor(t *testing.T) {
 }
 
 func TestMapCeiling(t *testing.T) {
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	m.Put(7, "g")
 	m.Put(3, "c")
 	m.Put(1, "a")
@@ -510,7 +510,7 @@ func TestMapIteratorPrev(t *testing.T) {
 }
 
 func TestMapIteratorBegin(t *testing.T) {
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	it := m.Iterator()
 	it.Begin()
 	m.Put(3, "c")
@@ -526,7 +526,7 @@ func TestMapIteratorBegin(t *testing.T) {
 }
 
 func TestMapIteratorEnd(t *testing.T) {
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	it := m.Iterator()
 	m.Put(3, "c")
 	m.Put(1, "a")
@@ -539,7 +539,7 @@ func TestMapIteratorEnd(t *testing.T) {
 }
 
 func TestMapIteratorFirst(t *testing.T) {
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	m.Put(3, "c")
 	m.Put(1, "a")
 	m.Put(2, "b")
@@ -553,7 +553,7 @@ func TestMapIteratorFirst(t *testing.T) {
 }
 
 func TestMapIteratorLast(t *testing.T) {
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	m.Put(3, "c")
 	m.Put(1, "a")
 	m.Put(2, "b")
@@ -574,7 +574,7 @@ func TestMapIteratorNextTo(t *testing.T) {
 
 	// NextTo (empty)
 	{
-		m := NewWithIntComparator()
+		m := NewWithNumberComparator()
 		it := m.Iterator()
 		for it.NextTo(seek) {
 			t.Errorf("Shouldn't iterate on empty map")
@@ -583,7 +583,7 @@ func TestMapIteratorNextTo(t *testing.T) {
 
 	// NextTo (not found)
 	{
-		m := NewWithIntComparator()
+		m := NewWithNumberComparator()
 		m.Put(0, "xx")
 		m.Put(1, "yy")
 		it := m.Iterator()
@@ -594,7 +594,7 @@ func TestMapIteratorNextTo(t *testing.T) {
 
 	// NextTo (found)
 	{
-		m := NewWithIntComparator()
+		m := NewWithNumberComparator()
 		m.Put(0, "aa")
 		m.Put(1, "bb")
 		m.Put(2, "cc")
@@ -626,7 +626,7 @@ func TestMapIteratorPrevTo(t *testing.T) {
 
 	// PrevTo (empty)
 	{
-		m := NewWithIntComparator()
+		m := NewWithNumberComparator()
 		it := m.Iterator()
 		it.End()
 		for it.PrevTo(seek) {
@@ -636,7 +636,7 @@ func TestMapIteratorPrevTo(t *testing.T) {
 
 	// PrevTo (not found)
 	{
-		m := NewWithIntComparator()
+		m := NewWithNumberComparator()
 		m.Put(0, "xx")
 		m.Put(1, "yy")
 		it := m.Iterator()
@@ -648,7 +648,7 @@ func TestMapIteratorPrevTo(t *testing.T) {
 
 	// PrevTo (found)
 	{
-		m := NewWithIntComparator()
+		m := NewWithNumberComparator()
 		m.Put(0, "aa")
 		m.Put(1, "bb")
 		m.Put(2, "cc")
@@ -771,7 +771,7 @@ func benchmarkRemove(b *testing.B, m *Map, size int) {
 func BenchmarkTreeMapGet100(b *testing.B) {
 	b.StopTimer()
 	size := 100
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	for n := 0; n < size; n++ {
 		m.Put(n, struct{}{})
 	}
@@ -782,7 +782,7 @@ func BenchmarkTreeMapGet100(b *testing.B) {
 func BenchmarkTreeMapGet1000(b *testing.B) {
 	b.StopTimer()
 	size := 1000
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	for n := 0; n < size; n++ {
 		m.Put(n, struct{}{})
 	}
@@ -793,7 +793,7 @@ func BenchmarkTreeMapGet1000(b *testing.B) {
 func BenchmarkTreeMapGet10000(b *testing.B) {
 	b.StopTimer()
 	size := 10000
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	for n := 0; n < size; n++ {
 		m.Put(n, struct{}{})
 	}
@@ -804,7 +804,7 @@ func BenchmarkTreeMapGet10000(b *testing.B) {
 func BenchmarkTreeMapGet100000(b *testing.B) {
 	b.StopTimer()
 	size := 100000
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	for n := 0; n < size; n++ {
 		m.Put(n, struct{}{})
 	}
@@ -815,7 +815,7 @@ func BenchmarkTreeMapGet100000(b *testing.B) {
 func BenchmarkTreeMapPut100(b *testing.B) {
 	b.StopTimer()
 	size := 100
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	b.StartTimer()
 	benchmarkPut(b, m, size)
 }
@@ -823,7 +823,7 @@ func BenchmarkTreeMapPut100(b *testing.B) {
 func BenchmarkTreeMapPut1000(b *testing.B) {
 	b.StopTimer()
 	size := 1000
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	for n := 0; n < size; n++ {
 		m.Put(n, struct{}{})
 	}
@@ -834,7 +834,7 @@ func BenchmarkTreeMapPut1000(b *testing.B) {
 func BenchmarkTreeMapPut10000(b *testing.B) {
 	b.StopTimer()
 	size := 10000
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	for n := 0; n < size; n++ {
 		m.Put(n, struct{}{})
 	}
@@ -845,7 +845,7 @@ func BenchmarkTreeMapPut10000(b *testing.B) {
 func BenchmarkTreeMapPut100000(b *testing.B) {
 	b.StopTimer()
 	size := 100000
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	for n := 0; n < size; n++ {
 		m.Put(n, struct{}{})
 	}
@@ -856,7 +856,7 @@ func BenchmarkTreeMapPut100000(b *testing.B) {
 func BenchmarkTreeMapRemove100(b *testing.B) {
 	b.StopTimer()
 	size := 100
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	for n := 0; n < size; n++ {
 		m.Put(n, struct{}{})
 	}
@@ -867,7 +867,7 @@ func BenchmarkTreeMapRemove100(b *testing.B) {
 func BenchmarkTreeMapRemove1000(b *testing.B) {
 	b.StopTimer()
 	size := 1000
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	for n := 0; n < size; n++ {
 		m.Put(n, struct{}{})
 	}
@@ -878,7 +878,7 @@ func BenchmarkTreeMapRemove1000(b *testing.B) {
 func BenchmarkTreeMapRemove10000(b *testing.B) {
 	b.StopTimer()
 	size := 10000
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	for n := 0; n < size; n++ {
 		m.Put(n, struct{}{})
 	}
@@ -889,7 +889,7 @@ func BenchmarkTreeMapRemove10000(b *testing.B) {
 func BenchmarkTreeMapRemove100000(b *testing.B) {
 	b.StopTimer()
 	size := 100000
-	m := NewWithIntComparator()
+	m := NewWithNumberComparator()
 	for n := 0; n < size; n++ {
 		m.Put(n, struct{}{})
 	}

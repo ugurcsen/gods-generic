@@ -20,7 +20,7 @@ type List[T comparable] interface {
 	Remove(index int)
 	Add(values ...T)
 	Contains(values ...T) bool
-	Sort(comparator utils.Comparator)
+	Sort(comparator utils.Comparator[T])
 	Swap(index1, index2 int)
 	Insert(index int, values ...T)
 	Set(index int, value T)

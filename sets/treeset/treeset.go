@@ -27,7 +27,7 @@ type Set[T comparable] struct {
 }
 
 // NewWith instantiates a new empty set with the custom comparator.
-func NewWith[T comparable](comparator utils.Comparator, values ...T) *Set[T] {
+func NewWith[T comparable](comparator utils.Comparator[T], values ...T) *Set[T] {
 	set := &Set[T]{tree: rbt.NewWith[T, struct{}](comparator)}
 	if len(values) > 0 {
 		set.Add(values...)
@@ -35,9 +35,9 @@ func NewWith[T comparable](comparator utils.Comparator, values ...T) *Set[T] {
 	return set
 }
 
-// NewWithIntComparator instantiates a new empty set with the IntComparator, i.e. keys are of type int.
-func NewWithIntComparator(values ...int) *Set[int] {
-	set := &Set[int]{tree: rbt.NewWithIntComparator[struct{}]()}
+// NewWithNumberComparator instantiates a new empty set with the IntComparator, i.e. keys are of type int.
+func NewWithNumberComparator(values ...int) *Set[int] {
+	set := &Set[int]{tree: rbt.NewWithNumberComparator[struct{}]()}
 	if len(values) > 0 {
 		set.Add(values...)
 	}

@@ -11,7 +11,7 @@ import (
 
 // BTreeExample to demonstrate basic usage of BTree
 func main() {
-	tree := btree.NewWithIntComparator(3) // empty (keys are of type int)
+	tree := btree.NewWithNumberComparator(3) // empty (keys are of type int)
 
 	tree.Put(1, "x") // 1->x
 	tree.Put(2, "b") // 1->x, 2->b (in order)

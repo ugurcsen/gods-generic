@@ -680,7 +680,7 @@ func benchmarkRemove(b *testing.B, m *Map, size int) {
 func BenchmarkTreeBidiMapGet100(b *testing.B) {
 	b.StopTimer()
 	size := 100
-	m := NewWithIntComparators()
+	m := NewWithNumberComparators()
 	for n := 0; n < size; n++ {
 		m.Put(n, n)
 	}
@@ -691,7 +691,7 @@ func BenchmarkTreeBidiMapGet100(b *testing.B) {
 func BenchmarkTreeBidiMapGet1000(b *testing.B) {
 	b.StopTimer()
 	size := 1000
-	m := NewWithIntComparators()
+	m := NewWithNumberComparators()
 	for n := 0; n < size; n++ {
 		m.Put(n, n)
 	}
@@ -702,7 +702,7 @@ func BenchmarkTreeBidiMapGet1000(b *testing.B) {
 func BenchmarkTreeBidiMapGet10000(b *testing.B) {
 	b.StopTimer()
 	size := 10000
-	m := NewWithIntComparators()
+	m := NewWithNumberComparators()
 	for n := 0; n < size; n++ {
 		m.Put(n, n)
 	}
@@ -713,7 +713,7 @@ func BenchmarkTreeBidiMapGet10000(b *testing.B) {
 func BenchmarkTreeBidiMapGet100000(b *testing.B) {
 	b.StopTimer()
 	size := 100000
-	m := NewWithIntComparators()
+	m := NewWithNumberComparators()
 	for n := 0; n < size; n++ {
 		m.Put(n, n)
 	}
@@ -724,7 +724,7 @@ func BenchmarkTreeBidiMapGet100000(b *testing.B) {
 func BenchmarkTreeBidiMapPut100(b *testing.B) {
 	b.StopTimer()
 	size := 100
-	m := NewWithIntComparators()
+	m := NewWithNumberComparators()
 	b.StartTimer()
 	benchmarkPut(b, m, size)
 }
@@ -732,7 +732,7 @@ func BenchmarkTreeBidiMapPut100(b *testing.B) {
 func BenchmarkTreeBidiMapPut1000(b *testing.B) {
 	b.StopTimer()
 	size := 1000
-	m := NewWithIntComparators()
+	m := NewWithNumberComparators()
 	for n := 0; n < size; n++ {
 		m.Put(n, n)
 	}
@@ -743,7 +743,7 @@ func BenchmarkTreeBidiMapPut1000(b *testing.B) {
 func BenchmarkTreeBidiMapPut10000(b *testing.B) {
 	b.StopTimer()
 	size := 10000
-	m := NewWithIntComparators()
+	m := NewWithNumberComparators()
 	for n := 0; n < size; n++ {
 		m.Put(n, n)
 	}
@@ -754,7 +754,7 @@ func BenchmarkTreeBidiMapPut10000(b *testing.B) {
 func BenchmarkTreeBidiMapPut100000(b *testing.B) {
 	b.StopTimer()
 	size := 100000
-	m := NewWithIntComparators()
+	m := NewWithNumberComparators()
 	for n := 0; n < size; n++ {
 		m.Put(n, n)
 	}
@@ -765,7 +765,7 @@ func BenchmarkTreeBidiMapPut100000(b *testing.B) {
 func BenchmarkTreeBidiMapRemove100(b *testing.B) {
 	b.StopTimer()
 	size := 100
-	m := NewWithIntComparators()
+	m := NewWithNumberComparators()
 	for n := 0; n < size; n++ {
 		m.Put(n, n)
 	}
@@ -776,7 +776,7 @@ func BenchmarkTreeBidiMapRemove100(b *testing.B) {
 func BenchmarkTreeBidiMapRemove1000(b *testing.B) {
 	b.StopTimer()
 	size := 1000
-	m := NewWithIntComparators()
+	m := NewWithNumberComparators()
 	for n := 0; n < size; n++ {
 		m.Put(n, n)
 	}
@@ -787,7 +787,7 @@ func BenchmarkTreeBidiMapRemove1000(b *testing.B) {
 func BenchmarkTreeBidiMapRemove10000(b *testing.B) {
 	b.StopTimer()
 	size := 10000
-	m := NewWithIntComparators()
+	m := NewWithNumberComparators()
 	for n := 0; n < size; n++ {
 		m.Put(n, n)
 	}
@@ -798,7 +798,7 @@ func BenchmarkTreeBidiMapRemove10000(b *testing.B) {
 func BenchmarkTreeBidiMapRemove100000(b *testing.B) {
 	b.StopTimer()
 	size := 100000
-	m := NewWithIntComparators()
+	m := NewWithNumberComparators()
 	for n := 0; n < size; n++ {
 		m.Put(n, n)
 	}

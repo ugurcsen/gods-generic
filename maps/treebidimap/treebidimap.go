@@ -51,8 +51,8 @@ func NewWith(keyComparator utils.Comparator, valueComparator utils.Comparator) *
 	}
 }
 
-// NewWithIntComparators instantiates a bidirectional map with the IntComparator for key and value, i.e. keys and values are of type int.
-func NewWithIntComparators() *Map {
+// NewWithNumberComparators instantiates a bidirectional map with the IntComparator for key and value, i.e. keys and values are of type int.
+func NewWithNumberComparators() *Map {
 	return NewWith(utils.IntComparator, utils.IntComparator)
 }
 

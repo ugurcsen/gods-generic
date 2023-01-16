@@ -12,7 +12,7 @@ import (
 
 // IteratorWithKeyExample to demonstrate basic usage of IteratorWithKey
 func main() {
-	m := treemap.NewWithIntComparator()
+	m := treemap.NewWithNumberComparator()
 	m.Put(0, "a")
 	m.Put(1, "b")
 	m.Put(2, "c")

@@ -46,9 +46,9 @@ func (container ContainerTest[T]) String() string {
 
 func TestGetSortedValuesInts(t *testing.T) {
 	container := ContainerTest[int]{}
-	GetSortedValues[int](container, utils.IntComparator)
+	GetSortedValues[int](container, utils.NumberComparator[int])
 	container.values = []int{5, 1, 3, 2, 4}
-	values := GetSortedValues[int](container, utils.IntComparator)
+	values := GetSortedValues[int](container, utils.NumberComparator[int])
 	for i := 1; i < container.Size(); i++ {
 		if values[i-1] > values[i] {
 			t.Errorf("Not sorted!")

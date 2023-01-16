@@ -32,9 +32,9 @@ func NewWith(comparator utils.Comparator) *Map {
 	return &Map{tree: rbt.NewWith(comparator)}
 }
 
-// NewWithIntComparator instantiates a tree map with the IntComparator, i.e. keys are of type int.
-func NewWithIntComparator() *Map {
-	return &Map{tree: rbt.NewWithIntComparator()}
+// NewWithNumberComparator instantiates a tree map with the IntComparator, i.e. keys are of type int.
+func NewWithNumberComparator() *Map {
+	return &Map{tree: rbt.NewWithNumberComparator()}
 }
 
 // NewWithStringComparator instantiates a tree map with the StringComparator, i.e. keys are of type string.

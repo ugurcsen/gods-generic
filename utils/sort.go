@@ -9,13 +9,13 @@ import "sort"
 // Sort sorts values (in-place) with respect to the given comparator.
 //
 // Uses Go's sort (hybrid of quicksort for large and then insertion sort for smaller slices).
-func Sort[T comparable](values []T, comparator Comparator) {
+func Sort[T comparable](values []T, comparator Comparator[T]) {
 	sort.Sort(sortable[T]{values, comparator})
 }
 
 type sortable[T comparable] struct {
 	values     []T
-	comparator Comparator
+	comparator Comparator[T]
 }
 
 func (s sortable[T]) Len() int {

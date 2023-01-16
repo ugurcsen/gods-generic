@@ -82,7 +82,7 @@ func print(tree *RedBlackTreeExtended) {
 
 // RedBlackTreeExtendedExample main method on how to use the custom red-black tree above
 func main() {
-	tree := RedBlackTreeExtended{rbt.NewWithIntComparator()}
+	tree := RedBlackTreeExtended{rbt.NewWithNumberComparator()}
 
 	tree.Put(1, "a") // 1->x (in order)
 	tree.Put(2, "b") // 1->x, 2->b (in order)

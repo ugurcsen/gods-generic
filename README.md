@@ -306,7 +306,7 @@ package main
 import "github.com/ugurcsen/gods-generic/sets/treeset"
 
 func main() {
-	set := treeset.NewWithIntComparator() // empty (keys are of type int)
+	set := treeset.NewWithNumberComparator() // empty (keys are of type int)
 	set.Add(1)                            // 1
 	set.Add(2, 2, 3, 4, 5)                // 1, 2, 3, 4, 5 (in order, duplicates ignored)
 	set.Remove(4)                         // 1, 2, 3, 5 (in order)
@@ -495,7 +495,7 @@ package main
 import "github.com/ugurcsen/gods-generic/maps/treemap"
 
 func main() {
-	m := treemap.NewWithIntComparator() // empty (keys are of type int)
+	m := treemap.NewWithNumberComparator() // empty (keys are of type int)
 	m.Put(1, "x")                       // 1->x
 	m.Put(2, "b")                       // 1->x, 2->b (in order)
 	m.Put(1, "a")                       // 1->a, 2->b (in order)
@@ -639,7 +639,7 @@ import (
 )
 
 func main() {
-	tree := rbt.NewWithIntComparator() // empty (keys are of type int)
+	tree := rbt.NewWithNumberComparator() // empty (keys are of type int)
 
 	tree.Put(1, "x") // 1->x
 	tree.Put(2, "b") // 1->x, 2->b (in order)
@@ -705,7 +705,7 @@ import (
 )
 
 func main() {
-	tree := avl.NewWithIntComparator() // empty(keys are of type int)
+	tree := avl.NewWithNumberComparator() // empty(keys are of type int)
 
 	tree.Put(1, "x") // 1->x
 	tree.Put(2, "b") // 1->x, 2->b (in order)
@@ -772,7 +772,7 @@ import (
 )
 
 func main() {
-	tree := btree.NewWithIntComparator(3) // empty (keys are of type int)
+	tree := btree.NewWithNumberComparator(3) // empty (keys are of type int)
 
 	tree.Put(1, "x") // 1->x
 	tree.Put(2, "b") // 1->x, 2->b (in order)
@@ -847,7 +847,7 @@ import (
 func main() {
 
 	// Min-heap
-	heap := binaryheap.NewWithIntComparator() // empty (min-heap)
+	heap := binaryheap.NewWithNumberComparator() // empty (min-heap)
 	heap.Push(2)                              // 2
 	heap.Push(3)                              // 2, 3
 	heap.Push(1)                              // 1, 3, 2
@@ -1376,7 +1376,7 @@ func printSet(txt string, set *treeset.Set) {
 }
 
 func main() {
-	set := treeset.NewWithIntComparator()
+	set := treeset.NewWithNumberComparator()
 	set.Add(2, 3, 4, 2, 5, 6, 7, 8)
 	printSet("Initial", set) // [ 2 3 4 5 6 7 8 ]
 

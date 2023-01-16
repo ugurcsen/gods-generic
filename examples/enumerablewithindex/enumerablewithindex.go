@@ -19,7 +19,7 @@ func printSet(txt string, set *treeset.Set) {
 
 // EnumerableWithIndexExample to demonstrate basic usage of EnumerableWithIndex
 func main() {
-	set := treeset.NewWithIntComparator()
+	set := treeset.NewWithNumberComparator()
 	set.Add(2, 3, 4, 2, 5, 6, 7, 8)
 	printSet("Initial", set) // [ 2 3 4 5 6 7 8 ]
 

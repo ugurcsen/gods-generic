@@ -20,9 +20,9 @@ var _ trees.Tree[int] = new(Tree[int, int])
 
 // Tree holds elements of the AVL tree.
 type Tree[K, T comparable] struct {
-	Root       *Node[K, T]      // Root node
-	Comparator utils.Comparator // Key comparator
-	size       int              // Total number of keys in the tree
+	Root       *Node[K, T]         // Root node
+	Comparator utils.Comparator[K] // Key comparator
+	size       int                 // Total number of keys in the tree
 }
 
 // Node is a single element within the tree
@@ -35,13 +35,13 @@ type Node[K, T comparable] struct {
 }
 
 // NewWith instantiates an AVL tree with the custom comparator.
-func NewWith[K, T comparable](comparator utils.Comparator) *Tree[K, T] {
+func NewWith[K, T comparable](comparator utils.Comparator[K]) *Tree[K, T] {
 	return &Tree[K, T]{Comparator: comparator}
 }
 
-// NewWithIntComparator instantiates an AVL tree with the IntComparator, i.e. keys are of type int.
-func NewWithIntComparator[T comparable]() *Tree[int, T] {
-	return &Tree[int, T]{Comparator: utils.IntComparator}
+// NewWithNumberComparator instantiates an AVL tree with the IntComparator, i.e. keys are of type int.
+func NewWithNumberComparator[T comparable]() *Tree[int, T] {
+	return &Tree[int, T]{Comparator: utils.NumberComparator[int]}
 }
 
 // NewWithStringComparator instantiates an AVL tree with the StringComparator, i.e. keys are of type string.

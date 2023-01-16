@@ -29,10 +29,10 @@ var _ trees.Tree[int] = (*Tree[int, int])(nil)
 
 // Tree holds elements of the B-tree
 type Tree[K, T comparable] struct {
-	Root       *Node[K, T]      // Root node
-	Comparator utils.Comparator // Key comparator
-	size       int              // Total number of keys in the tree
-	m          int              // order (maximum number of children)
+	Root       *Node[K, T]         // Root node
+	Comparator utils.Comparator[K] // Key comparator
+	size       int                 // Total number of keys in the tree
+	m          int                 // order (maximum number of children)
 }
 
 // Node is a single element within the tree
@@ -49,16 +49,16 @@ type Entry[K, T comparable] struct {
 }
 
 // NewWith instantiates a B-tree with the order (maximum number of children) and a custom key comparator.
-func NewWith[K, T comparable](order int, comparator utils.Comparator) *Tree[K, T] {
+func NewWith[K, T comparable](order int, comparator utils.Comparator[K]) *Tree[K, T] {
 	if order < 3 {
 		panic("Invalid order, should be at least 3")
 	}
 	return &Tree[K, T]{m: order, Comparator: comparator}
 }
 
-// NewWithIntComparator instantiates a B-tree with the order (maximum number of children) and the IntComparator, i.e. keys are of type int.
-func NewWithIntComparator[T comparable](order int) *Tree[int, T] {
-	return NewWith[int, T](order, utils.IntComparator)
+// NewWithNumberComparator instantiates a B-tree with the order (maximum number of children) and the IntComparator, i.e. keys are of type int.
+func NewWithNumberComparator[T comparable](order int) *Tree[int, T] {
+	return NewWith[int, T](order, utils.NumberComparator[int])
 }
 
 // NewWithStringComparator instantiates a B-tree with the order (maximum number of children) and the StringComparator, i.e. keys are of type string.

@@ -23,7 +23,7 @@ func TestIntComparator(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actual := IntComparator(test[0], test[1])
+		actual := NumberComparator(test[0].(int), test[1].(int))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -46,7 +46,7 @@ func TestStringComparator(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actual := StringComparator(test[0], test[1])
+		actual := StringComparator(test[0].(string), test[1].(string))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -66,7 +66,7 @@ func TestTimeComparator(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actual := TimeComparator(test[0], test[1])
+		actual := TimeComparator(test[0].(time.Time), test[1].(time.Time))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -118,7 +118,7 @@ func TestInt8ComparatorComparator(t *testing.T) {
 		{int8(1), int8(0), 1},
 	}
 	for _, test := range tests {
-		actual := Int8Comparator(test[0], test[1])
+		actual := NumberComparator(test[0].(int8), test[1].(int8))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -133,7 +133,7 @@ func TestInt16Comparator(t *testing.T) {
 		{int16(1), int16(0), 1},
 	}
 	for _, test := range tests {
-		actual := Int16Comparator(test[0], test[1])
+		actual := NumberComparator(test[0].(int16), test[1].(int16))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -148,7 +148,7 @@ func TestInt32Comparator(t *testing.T) {
 		{int32(1), int32(0), 1},
 	}
 	for _, test := range tests {
-		actual := Int32Comparator(test[0], test[1])
+		actual := NumberComparator(test[0].(int32), test[1].(int32))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -163,7 +163,7 @@ func TestInt64Comparator(t *testing.T) {
 		{int64(1), int64(0), 1},
 	}
 	for _, test := range tests {
-		actual := Int64Comparator(test[0], test[1])
+		actual := NumberComparator(test[0].(int64), test[1].(int64))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -178,7 +178,7 @@ func TestUIntComparator(t *testing.T) {
 		{uint(1), uint(0), 1},
 	}
 	for _, test := range tests {
-		actual := UIntComparator(test[0], test[1])
+		actual := NumberComparator(test[0].(uint), test[1].(uint))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -193,7 +193,7 @@ func TestUInt8Comparator(t *testing.T) {
 		{uint8(1), uint8(0), 1},
 	}
 	for _, test := range tests {
-		actual := UInt8Comparator(test[0], test[1])
+		actual := NumberComparator(test[0].(uint8), test[1].(uint8))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -208,7 +208,7 @@ func TestUInt16Comparator(t *testing.T) {
 		{uint16(1), uint16(0), 1},
 	}
 	for _, test := range tests {
-		actual := UInt16Comparator(test[0], test[1])
+		actual := NumberComparator(test[0].(uint16), test[1].(uint16))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -223,7 +223,7 @@ func TestUInt32Comparator(t *testing.T) {
 		{uint32(1), uint32(0), 1},
 	}
 	for _, test := range tests {
-		actual := UInt32Comparator(test[0], test[1])
+		actual := NumberComparator(test[0].(uint32), test[1].(uint32))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -238,7 +238,7 @@ func TestUInt64Comparator(t *testing.T) {
 		{uint64(1), uint64(0), 1},
 	}
 	for _, test := range tests {
-		actual := UInt64Comparator(test[0], test[1])
+		actual := NumberComparator(test[0].(uint64), test[1].(uint64))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -253,7 +253,7 @@ func TestFloat32Comparator(t *testing.T) {
 		{float32(1.1), float32(0.1), 1},
 	}
 	for _, test := range tests {
-		actual := Float32Comparator(test[0], test[1])
+		actual := NumberComparator(test[0].(float32), test[1].(float32))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -268,7 +268,7 @@ func TestFloat64Comparator(t *testing.T) {
 		{float64(1.1), float64(0.1), 1},
 	}
 	for _, test := range tests {
-		actual := Float64Comparator(test[0], test[1])
+		actual := NumberComparator(test[0].(float64), test[1].(float64))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -283,7 +283,7 @@ func TestByteComparator(t *testing.T) {
 		{byte(1), byte(0), 1},
 	}
 	for _, test := range tests {
-		actual := ByteComparator(test[0], test[1])
+		actual := NumberComparator(test[0].(byte), test[1].(byte))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
@@ -298,7 +298,7 @@ func TestRuneComparator(t *testing.T) {
 		{rune(1), rune(0), 1},
 	}
 	for _, test := range tests {
-		actual := RuneComparator(test[0], test[1])
+		actual := RuneComparator(test[0].(rune), test[1].(rune))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)

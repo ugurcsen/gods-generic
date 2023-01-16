@@ -26,7 +26,7 @@ type Container[T comparable] interface {
 
 // GetSortedValues returns sorted container's elements with respect to the passed comparator.
 // Does not affect the ordering of elements within the container.
-func GetSortedValues[T comparable](container Container[T], comparator utils.Comparator) []T {
+func GetSortedValues[T comparable](container Container[T], comparator utils.Comparator[T]) []T {
 	values := container.Values()
 	if len(values) < 2 {
 		return values
