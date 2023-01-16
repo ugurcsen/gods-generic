@@ -11,12 +11,12 @@ import (
 )
 
 // Assert Serialization implementation
-var _ containers.JSONSerializer = (*Tree)(nil)
-var _ containers.JSONDeserializer = (*Tree)(nil)
+var _ containers.JSONSerializer = (*Tree[int, int])(nil)
+var _ containers.JSONDeserializer = (*Tree[int, int])(nil)
 
 // ToJSON outputs the JSON representation of the tree.
-func (tree *Tree) ToJSON() ([]byte, error) {
-	elements := make(map[string]interface{})
+func (tree *Tree[K, T]) ToJSON() ([]byte, error) {
+	elements := make(map[string]T)
 	it := tree.Iterator()
 	for it.Next() {
 		elements[utils.ToString(it.Key())] = it.Value()
@@ -25,8 +25,8 @@ func (tree *Tree) ToJSON() ([]byte, error) {
 }
 
 // FromJSON populates the tree from the input JSON representation.
-func (tree *Tree) FromJSON(data []byte) error {
-	elements := make(map[string]interface{})
+func (tree *Tree[K, T]) FromJSON(data []byte) error {
+	elements := make(map[K]T)
 	err := json.Unmarshal(data, &elements)
 	if err == nil {
 		tree.Clear()
@@ -38,11 +38,11 @@ func (tree *Tree) FromJSON(data []byte) error {
 }
 
 // UnmarshalJSON @implements json.Unmarshaler
-func (tree *Tree) UnmarshalJSON(bytes []byte) error {
+func (tree *Tree[K, T]) UnmarshalJSON(bytes []byte) error {
 	return tree.FromJSON(bytes)
 }
 
 // MarshalJSON @implements json.Marshaler
-func (tree *Tree) MarshalJSON() ([]byte, error) {
+func (tree *Tree[K, T]) MarshalJSON() ([]byte, error) {
 	return tree.ToJSON()
 }

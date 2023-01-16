@@ -32,7 +32,7 @@ Implementation of various data structures and algorithms in Go.
   - [ ] [Trees](#trees)
     - [x] [RedBlackTree](#redblacktree)
     - [x] [AVLTree](#avltree)
-    - [ ] [BTree](#btree)
+    - [x] [BTree](#btree)
     - [ ] [BinaryHeap](#binaryheap)
   - [ ] [Queues](#queues)
     - [ ] [LinkedListQueue](#linkedlistqueue)
