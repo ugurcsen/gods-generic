@@ -11,7 +11,7 @@ Implementation of various data structures and algorithms in Go.
 
 ## Data Structures
 
-- [ ] [Containers](#containers)
+- [x] [Containers](#containers)
   - [x] [Lists](#lists)
     - [x] [ArrayList](#arraylist)
     - [x] [SinglyLinkedList](#singlylinkedlist)
@@ -23,12 +23,12 @@ Implementation of various data structures and algorithms in Go.
   - [x] [Stacks](#stacks)
     - [x] [LinkedListStack](#linkedliststack)
     - [x] [ArrayStack](#arraystack)
-  - [ ] [Maps](#maps)
+  - [x] [Maps](#maps)
     - [x] [HashMap](#hashmap)
     - [x] [TreeMap](#treemap)
     - [x] [LinkedHashMap](#linkedhashmap)
     - [x] [HashBidiMap](#hashbidimap)
-    - [ ] [TreeBidiMap](#treebidimap)
+    - [x] [TreeBidiMap](#treebidimap)
   - [x] [Trees](#trees)
     - [x] [RedBlackTree](#redblacktree)
     - [x] [AVLTree](#avltree)
