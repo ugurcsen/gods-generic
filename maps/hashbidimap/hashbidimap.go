@@ -22,21 +22,21 @@ import (
 )
 
 // Assert Map implementation
-var _ maps.BidiMap = (*Map)(nil)
+var _ maps.BidiMap[int, int] = (*Map[int, int])(nil)
 
 // Map holds the elements in two hashmaps.
-type Map struct {
-	forwardMap hashmap.Map
-	inverseMap hashmap.Map
+type Map[K, T comparable] struct {
+	forwardMap hashmap.Map[K, T]
+	inverseMap hashmap.Map[T, K]
 }
 
 // New instantiates a bidirectional map.
-func New() *Map {
-	return &Map{*hashmap.New(), *hashmap.New()}
+func New[K, T comparable]() *Map[K, T] {
+	return &Map[K, T]{*hashmap.New[K, T](), *hashmap.New[T, K]()}
 }
 
 // Put inserts element into the map.
-func (m *Map) Put(key interface{}, value interface{}) {
+func (m *Map[K, T]) Put(key K, value T) {
 	if valueByKey, ok := m.forwardMap.Get(key); ok {
 		m.inverseMap.Remove(valueByKey)
 	}
@@ -49,18 +49,18 @@ func (m *Map) Put(key interface{}, value interface{}) {
 
 // Get searches the element in the map by key and returns its value or nil if key is not found in map.
 // Second return parameter is true if key was found, otherwise false.
-func (m *Map) Get(key interface{}) (value interface{}, found bool) {
+func (m *Map[K, T]) Get(key K) (value T, found bool) {
 	return m.forwardMap.Get(key)
 }
 
 // GetKey searches the element in the map by value and returns its key or nil if value is not found in map.
 // Second return parameter is true if value was found, otherwise false.
-func (m *Map) GetKey(value interface{}) (key interface{}, found bool) {
+func (m *Map[K, T]) GetKey(value T) (key K, found bool) {
 	return m.inverseMap.Get(value)
 }
 
 // Remove removes the element from the map by key.
-func (m *Map) Remove(key interface{}) {
+func (m *Map[K, T]) Remove(key K) {
 	if value, found := m.forwardMap.Get(key); found {
 		m.forwardMap.Remove(key)
 		m.inverseMap.Remove(value)
@@ -68,33 +68,33 @@ func (m *Map) Remove(key interface{}) {
 }
 
 // Empty returns true if map does not contain any elements
-func (m *Map) Empty() bool {
+func (m *Map[K, T]) Empty() bool {
 	return m.Size() == 0
 }
 
 // Size returns number of elements in the map.
-func (m *Map) Size() int {
+func (m *Map[K, T]) Size() int {
 	return m.forwardMap.Size()
 }
 
 // Keys returns all keys (random order).
-func (m *Map) Keys() []interface{} {
+func (m *Map[K, T]) Keys() []K {
 	return m.forwardMap.Keys()
 }
 
 // Values returns all values (random order).
-func (m *Map) Values() []interface{} {
+func (m *Map[K, T]) Values() []T {
 	return m.inverseMap.Keys()
 }
 
 // Clear removes all elements from the map.
-func (m *Map) Clear() {
+func (m *Map[K, T]) Clear() {
 	m.forwardMap.Clear()
 	m.inverseMap.Clear()
 }
 
 // String returns a string representation of container
-func (m *Map) String() string {
+func (m *Map[K, T]) String() string {
 	str := "HashBidiMap\n"
 	str += fmt.Sprintf("%v", m.forwardMap)
 	return str
