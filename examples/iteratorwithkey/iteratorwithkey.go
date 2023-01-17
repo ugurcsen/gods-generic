@@ -12,7 +12,7 @@ import (
 
 // IteratorWithKeyExample to demonstrate basic usage of IteratorWithKey
 func main() {
-	m := treemap.NewWithNumberComparator()
+	m := treemap.NewWithNumberComparator[string]()
 	m.Put(0, "a")
 	m.Put(1, "b")
 	m.Put(2, "c")
@@ -53,8 +53,8 @@ func main() {
 	}
 
 	// Seek key-value pair whose value starts with "b"
-	seek := func(key interface{}, value interface{}) bool {
-		return strings.HasSuffix(value.(string), "b")
+	seek := func(key int, value string) bool {
+		return strings.HasSuffix(value, "b")
 	}
 
 	it.Begin()

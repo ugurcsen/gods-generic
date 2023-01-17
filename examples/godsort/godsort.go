@@ -8,7 +8,7 @@ import "github.com/ugurcsen/gods-generic/utils"
 
 // SortExample to demonstrate basic usage of basic sort
 func main() {
-	strings := []interface{}{}                  // []
+	var strings []string                        // []
 	strings = append(strings, "d")              // ["d"]
 	strings = append(strings, "a")              // ["d","a"]
 	strings = append(strings, "b")              // ["d","a",b"

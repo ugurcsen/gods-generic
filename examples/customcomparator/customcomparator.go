@@ -16,11 +16,11 @@ type User struct {
 }
 
 // Comparator function (sort by IDs)
-func byID(a, b interface{}) int {
+func byID(a, b User) int {
 
 	// Type assertion, program will panic if this is not respected
-	c1 := a.(User)
-	c2 := b.(User)
+	c1 := a
+	c2 := b
 
 	switch {
 	case c1.id > c2.id:

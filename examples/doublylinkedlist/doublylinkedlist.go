@@ -11,7 +11,7 @@ import (
 
 // DoublyLinkedListExample to demonstrate basic usage of DoublyLinkedList
 func main() {
-	list := dll.New()
+	list := dll.New[string]()
 	list.Add("a")                         // ["a"]
 	list.Append("b")                      // ["a","b"] (same as Add())
 	list.Prepend("c")                     // ["c","a","b"]

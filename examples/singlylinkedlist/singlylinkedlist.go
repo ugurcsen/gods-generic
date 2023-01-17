@@ -11,7 +11,7 @@ import (
 
 // SinglyLinkedListExample to demonstrate basic usage of SinglyLinkedList
 func main() {
-	list := sll.New()
+	list := sll.New[string]()
 	list.Add("a")                         // ["a"]
 	list.Append("b")                      // ["a","b"] (same as Add())
 	list.Prepend("c")                     // ["c","a","b"]
