@@ -54,7 +54,7 @@ Implementation of various data structures and algorithms in Go.
       - [x] [JSONDeserializer](#jsondeserializer)
     - [x] [Sort](#sort)
     - [x] [Container](#container)
-- [Appendix](#appendix)
+- [x] [Appendix](#appendix)
 
 
 ## Containers
@@ -62,12 +62,12 @@ Implementation of various data structures and algorithms in Go.
 All data structures implement the container interface with the following methods:
 
 ```go
-type Container interface {
-	Empty() bool
-	Size() int
-	Clear()
-	Values() []interface{}
-	String() string
+type Container[T comparable] interface {
+    Empty() bool
+    Size() int
+    Clear()
+    Values() []T
+    String() string
 }
 ```
 
@@ -111,21 +111,21 @@ A list is a data structure that stores values and may have repeated values.
 Implements [Container](#containers) interface.
 
 ```go
-type List interface {
-	Get(index int) (interface{}, bool)
-	Remove(index int)
-	Add(values ...interface{})
-	Contains(values ...interface{}) bool
-	Sort(comparator utils.Comparator)
-	Swap(index1, index2 int)
-	Insert(index int, values ...interface{})
-	Set(index int, value interface{})
-
-	containers.Container
-	// Empty() bool
-	// Size() int
-	// Clear()
-	// Values() []interface{}
+type List[T comparable] interface {
+    Get(index int) (T, bool)
+    Remove(index int)
+    Add(values ...T)
+    Contains(values ...T) bool
+    Sort(comparator utils.Comparator[T])
+    Swap(index1, index2 int)
+    Insert(index int, values ...T)
+    Set(index int, value T)
+    
+    containers.Container[T]
+    // Empty() bool
+    // Size() int
+    // Clear()
+    // Values() []interface{}
     // String() string
 }
 ```
@@ -145,23 +145,23 @@ import (
 )
 
 func main() {
-	list := arraylist.New()
-	list.Add("a")                         // ["a"]
-	list.Add("c", "b")                    // ["a","c","b"]
-	list.Sort(utils.StringComparator)     // ["a","b","c"]
-	_, _ = list.Get(0)                    // "a",true
-	_, _ = list.Get(100)                  // nil,false
-	_ = list.Contains("a", "b", "c")      // true
-	_ = list.Contains("a", "b", "c", "d") // false
-	list.Swap(0, 1)                       // ["b","a",c"]
-	list.Remove(2)                        // ["b","a"]
-	list.Remove(1)                        // ["b"]
-	list.Remove(0)                        // []
-	list.Remove(0)                        // [] (ignored)
-	_ = list.Empty()                      // true
-	_ = list.Size()                       // 0
-	list.Add("a")                         // ["a"]
-	list.Clear()                          // []
+    list := arraylist.New[string]()
+    list.Add("a")                         // ["a"]
+    list.Add("c", "b")                    // ["a","c","b"]
+    list.Sort(utils.StringComparator)     // ["a","b","c"]
+    _, _ = list.Get(0)                    // "a",true
+    _, _ = list.Get(100)                  // nil,false
+    _ = list.Contains("a", "b", "c")      // true
+    _ = list.Contains("a", "b", "c", "d") // false
+    list.Swap(0, 1)                       // ["b","a",c"]
+    list.Remove(2)                        // ["b","a"]
+    list.Remove(1)                        // ["b"]
+    list.Remove(0)                        // []
+    list.Remove(0)                        // [] (ignored)
+    _ = list.Empty()                      // true
+    _ = list.Size()                       // 0
+    list.Add("a")                         // ["a"]
+    list.Clear()                          // []
 	list.Insert(0, "b")                   // ["b"]
 	list.Insert(0, "a")                   // ["a","b"]
 }
@@ -182,23 +182,23 @@ import (
 )
 
 func main() {
-	list := sll.New()
-	list.Add("a")                         // ["a"]
-	list.Add("c", "b")                    // ["a","c","b"]
-	list.Sort(utils.StringComparator)     // ["a","b","c"]
-	_, _ = list.Get(0)                    // "a",true
-	_, _ = list.Get(100)                  // nil,false
-	_ = list.Contains("a", "b", "c")      // true
-	_ = list.Contains("a", "b", "c", "d") // false
-	list.Swap(0, 1)                       // ["b","a",c"]
-	list.Remove(2)                        // ["b","a"]
-	list.Remove(1)                        // ["b"]
-	list.Remove(0)                        // []
-	list.Remove(0)                        // [] (ignored)
-	_ = list.Empty()                      // true
-	_ = list.Size()                       // 0
-	list.Add("a")                         // ["a"]
-	list.Clear()                          // []
+    list := sll.New[string]()
+    list.Add("a")                         // ["a"]
+    list.Append("b")                      // ["a","b"] (same as Add())
+    list.Prepend("c")                     // ["c","a","b"]
+    list.Sort(utils.StringComparator)     // ["a","b","c"]
+    _, _ = list.Get(0)                    // "a",true
+    _, _ = list.Get(100)                  // nil,false
+    _ = list.Contains("a", "b", "c")      // true
+    _ = list.Contains("a", "b", "c", "d") // false
+    list.Remove(2)                        // ["a","b"]
+    list.Remove(1)                        // ["a"]
+    list.Remove(0)                        // []
+    list.Remove(0)                        // [] (ignored)
+    _ = list.Empty()                      // true
+    _ = list.Size()                       // 0
+    list.Add("a")                         // ["a"]
+    list.Clear()                          // []
 	list.Insert(0, "b")                   // ["b"]
 	list.Insert(0, "a")                   // ["a","b"]
 }
@@ -219,23 +219,23 @@ import (
 )
 
 func main() {
-	list := dll.New()
-	list.Add("a")                         // ["a"]
-	list.Add("c", "b")                    // ["a","c","b"]
-	list.Sort(utils.StringComparator)     // ["a","b","c"]
-	_, _ = list.Get(0)                    // "a",true
-	_, _ = list.Get(100)                  // nil,false
-	_ = list.Contains("a", "b", "c")      // true
-	_ = list.Contains("a", "b", "c", "d") // false
-	list.Swap(0, 1)                       // ["b","a",c"]
-	list.Remove(2)                        // ["b","a"]
-	list.Remove(1)                        // ["b"]
-	list.Remove(0)                        // []
-	list.Remove(0)                        // [] (ignored)
-	_ = list.Empty()                      // true
-	_ = list.Size()                       // 0
-	list.Add("a")                         // ["a"]
-	list.Clear()                          // []
+    list := dll.New[string]()
+    list.Add("a")                         // ["a"]
+    list.Append("b")                      // ["a","b"] (same as Add())
+    list.Prepend("c")                     // ["c","a","b"]
+    list.Sort(utils.StringComparator)     // ["a","b","c"]
+    _, _ = list.Get(0)                    // "a",true
+    _, _ = list.Get(100)                  // nil,false
+    _ = list.Contains("a", "b", "c")      // true
+    _ = list.Contains("a", "b", "c", "d") // false
+    list.Remove(2)                        // ["a","b"]
+    list.Remove(1)                        // ["a"]
+    list.Remove(0)                        // []
+    list.Remove(0)                        // [] (ignored)
+    _ = list.Empty()                      // true
+    _ = list.Size()                       // 0
+    list.Add("a")                         // ["a"]
+    list.Clear()                          // []
 	list.Insert(0, "b")                   // ["b"]
 	list.Insert(0, "a")                   // ["a","b"]
 }
@@ -250,21 +250,22 @@ Set additionally allow set operations such as [intersection](https://en.wikipedi
 Implements [Container](#containers) interface.
 
 ```go
-type Set interface {
-	Add(elements ...interface{})
-	Remove(elements ...interface{})
-	Contains(elements ...interface{}) bool
+type Set[T comparable] interface {
+    Add(elements ...T)
+    Remove(elements ...T)
+    Contains(elements ...T) bool
     // Intersection(another *Set) *Set
     // Union(another *Set) *Set
     // Difference(another *Set) *Set
-	
-	containers.Container
-	// Empty() bool
-	// Size() int
-	// Clear()
-	// Values() []interface{}
-	// String() string
+    
+    containers.Container[T]
+    // Empty() bool
+    // Size() int
+    // Clear()
+    // Values() []interface{}
+    // String() string
 }
+
 ```
 
 #### HashSet
@@ -279,18 +280,18 @@ package main
 import "github.com/ugurcsen/gods-generic/sets/hashset"
 
 func main() {
-	set := hashset.New()   // empty
-	set.Add(1)             // 1
-	set.Add(2, 2, 3, 4, 5) // 3, 1, 2, 4, 5 (random order, duplicates ignored)
-	set.Remove(4)          // 5, 3, 2, 1 (random order)
-	set.Remove(2, 3)       // 1, 5 (random order)
-	set.Contains(1)        // true
-	set.Contains(1, 5)     // true
-	set.Contains(1, 6)     // false
-	_ = set.Values()       // []int{5,1} (random order)
-	set.Clear()            // empty
-	set.Empty()            // true
-	set.Size()             // 0
+    set := hashset.New[int]() // empty (keys are of type int)
+    set.Add(1)                // 1
+    set.Add(2, 2, 3, 4, 5)    // 3, 1, 2, 4, 5 (random order, duplicates ignored)
+    set.Remove(4)             // 5, 3, 2, 1 (random order)
+    set.Remove(2, 3)          // 1, 5 (random order)
+    set.Contains(1)           // true
+    set.Contains(1, 5)        // true
+    set.Contains(1, 6)        // false
+    _ = set.Values()          // []int{5,1} (random order)
+    set.Clear()               // empty
+    set.Empty()               // true
+    set.Size()                // 0
 }
 ```
 
@@ -1735,7 +1736,215 @@ This takes a while, so test within sub-packages:
 
 `go test -run=NO_TEST -bench . -benchmem  -benchtime 1s ./...`
 
-<p align="center"><img src="https://cloud.githubusercontent.com/assets/3115942/16892979/5e698d46-4b27-11e6-864b-cb2b865327b6.png" /></p>
+Non Generic version is [github.com/emirpasic/gods]()
+
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+|--------------------------------|-----------------------|-----------------------|----------|----------------------|-----------------------|----------|-------------------|-------------------|----------|
+| ArrayList Get 100              | 96 ns/op              | 56,78 ns/op           | %69      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayList Get 1000             | 954,7 ns/op           | 522,8 ns/op           | %83      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayList Get 10000            | 9.563 ns/op           | 5.184 ns/op           | %84      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayList Get 100000           | 95.477 ns/op          | 50.836 ns/op          | %88      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayList Add 100              | 2.977 ns/op           | 567,9 ns/op           | %424     | 6.276 B/op           | 3.125 B/op            | %101     | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayList Add 1000             | 24.379 ns/op          | 6.798 ns/op           | %259     | 45.458 B/op          | 23.602 B/op           | %93      | 744 allocs/op     | 0 allocs/op       | ∞        |
+| ArrayList Add 10000            | 280.743 ns/op         | 51.363 ns/op          | %447     | 503.260 B/op         | 242.948 B/op          | %107     | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| ArrayList Add 100000           | 3.542.995 ns/op       | 637.222 ns/op         | %456     | 6.921.637 B/op       | 2.378.902 B/op        | %191     | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| ArrayList Remove 100           | 217,2 ns/op           | 250,7 ns/op           | -%13     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayList Remove 1000          | 2.092 ns/op           | 2.765 ns/op           | -%24     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayList Remove 10000         | 20.951 ns/op          | 25.810 ns/op          | -%19     | 1 B/op               | 0 B/op                | ∞        | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayList Remove 100000        | 4.765.332 ns/op       | 450.777 ns/op         | %957     | 3.328 B/op           | 129 B/op              | %2.480   | 0 allocs/op       | 0 allocs/op       | %0       |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| DoublyLinkedList Get 100       | 1.508 ns/op           | 1.090 ns/op           | %38      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| DoublyLinkedList Get 1000      | 210.991 ns/op         | 201.415 ns/op         | %5       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| DoublyLinkedList Get 10000     | 28.638.542 ns/op      | 23.120.196 ns/op      | %24      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| DoublyLinkedList Get 100000    | 3.238.820.667 ns/op   | 2.441.314.958 ns/op   | %33      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| DoublyLinkedList Add 100       | 3.079 ns/op           | 2.632 ns/op           | %17      | 3.200 B/op           | 2.400 B/op            | %33      | 100 allocs/op     | 100 allocs/op     | %0       |
+| DoublyLinkedList Add 1000      | 40.018 ns/op          | 26.092 ns/op          | %53      | 37.952 B/op          | 24.000 B/op           | %58      | 1.744 allocs/op   | 1.000 allocs/op   | %74      |
+| DoublyLinkedList Add 10000     | 414.397 ns/op         | 253.128 ns/op         | %64      | 397.952 B/op         | 240.000 B/op          | %66      | 19.744 allocs/op  | 10.000 allocs/op  | %97      |
+| DoublyLinkedList Add 100000    | 4.097.912 ns/op       | 2.672.412 ns/op       | %53      | 3.997.952 B/op       | 2.400.000 B/op        | %67      | 199.744 allocs/op | 100.000 allocs/op | %100     |
+| DoublyLinkedList Remove 100    | 216,4 ns/op           | 215,9 ns/op           | %0       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| DoublyLinkedList Remove 1000   | 2.090 ns/op           | 2.071 ns/op           | %1       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| DoublyLinkedList Remove 10000  | 21.138 ns/op          | 20.824 ns/op          | %2       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| DoublyLinkedList Remove 100000 | 1.479.976.834 ns/op   | 634.645.521 ns/op     | %133     | 96 B/op              | 0 B/op                | ∞        | 1 allocs/op       | 0 allocs/op       | ∞        |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| SinglyLinkedList Get 100       | 2.718 ns/op           | 2.434 ns/op           | %12      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| SinglyLinkedList Get 1000      | 443.806 ns/op         | 432.509 ns/op         | %3       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| SinglyLinkedList Get 10000     | 70.921.002 ns/op      | 48.080.932 ns/op      | %48      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| SinglyLinkedList Get 100000    | 5.487.166.668 ns/op   | 4.922.933.792 ns/op   | %11      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| SinglyLinkedList Add 100       | 3.423 ns/op           | 3.201 ns/op           | %7       | 2.400 B/op           | 1.600 B/op            | %50      | 100 allocs/op     | 100 allocs/op     | %0       |
+| SinglyLinkedList Add 1000      | 41.118 ns/op          | 23.598 ns/op          | %74      | 29.952 B/op          | 16.000 B/op           | %87      | 1.744 allocs/op   | 1.000 allocs/op   | %74      |
+| SinglyLinkedList Add 10000     | 392.871 ns/op         | 226.340 ns/op         | %74      | 317.952 B/op         | 160.000 B/op          | %99      | 19.744 allocs/op  | 10.000 allocs/op  | %97      |
+| SinglyLinkedList Add 100000    | 4.032.446 ns/op       | 2.336.021 ns/op       | %73      | 3.197.952 B/op       | 1.600.000 B/op        | %100     | 199.744 allocs/op | 100.000 allocs/op | %100     |
+| SinglyLinkedList Remove 100    | 217,9 ns/op           | 215,7 ns/op           | %1       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| SinglyLinkedList Remove 1000   | 2.093 ns/op           | 2.106 ns/op           | -%1      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| SinglyLinkedList Remove 10000  | 21.384 ns/op          | 21.316 ns/op          | %0       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| SinglyLinkedList Remove 100000 | 1.659.551.583 ns/op   | 1.497.199.208 ns/op   | %11      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| HashBidiMap Get 100            | 1.375 ns/op           | 606,8 ns/op           | %127     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashBidiMap Get 1000           | 10.147 ns/op          | 5.569 ns/op           | %82      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashBidiMap Get 10000          | 244.080 ns/op         | 177.146 ns/op         | %38      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashBidiMap Get 100000         | 2.973.754 ns/op       | 2.110.579 ns/op       | %41      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashBidiMap Put 100            | 10.123 ns/op          | 4.829 ns/op           | %110     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashBidiMap Put 1000           | 77.706 ns/op          | 36.435 ns/op          | %113     | 11.904 B/op          | 0 B/op                | ∞        | 1.488 allocs/op   | 0 allocs/op       | ∞        |
+| HashBidiMap Put 10000          | 1.518.899 ns/op       | 922.936 ns/op         | %65      | 155.904 B/op         | 0 B/op                | ∞        | 19.488 allocs/op  | 0 allocs/op       | ∞        |
+| HashBidiMap Put 100000         | 17.534.874 ns/op      | 10.306.088 ns/op      | %70      | 1.595.905 B/op       | 0 B/op                | ∞        | 199.488 allocs/op | 0 allocs/op       | ∞        |
+| HashBidiMap Remove 100         | 503,6 ns/op           | 230,1 ns/op           | %119     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashBidiMap Remove 1000        | 4.962 ns/op           | 2.238 ns/op           | %122     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashBidiMap Remove 10000       | 49.393 ns/op          | 24.633 ns/op          | %101     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashBidiMap Remove 100000      | 499.347 ns/op         | 224.164 ns/op         | %123     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| HashMap Get 100                | 1.335 ns/op           | 605,8 ns/op           | %120     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashMap Get 1000               | 10.309 ns/op          | 5.415 ns/op           | %90      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashMap Get 10000              | 249.199 ns/op         | 163.026 ns/op         | %53      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashMap Get 100000             | 2.895.422 ns/op       | 2.025.766 ns/op       | %43      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashMap Put 100                | 2.425 ns/op           | 849,9 ns/op           | %185     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashMap Put 1000               | 19.716 ns/op          | 7.192 ns/op           | %174     | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| HashMap Put 10000              | 370.781 ns/op         | 186.410 ns/op         | %99      | 77.952 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| HashMap Put 100000             | 4.207.168 ns/op       | 2.267.878 ns/op       | %86      | 797.955 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| HashMap Remove 100             | 494,2 ns/op           | 219,3 ns/op           | %125     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashMap Remove 1000            | 4.947 ns/op           | 2.100 ns/op           | %136     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashMap Remove 10000           | 47.827 ns/op          | 21.152 ns/op          | %126     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashMap Remove 100000          | 495.454 ns/op         | 209.361 ns/op         | %137     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| TreeBidiMap Get 100            | 1.773 ns/op           | 1.970 ns/op           | -%10     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| TreeBidiMap Get 1000           | 53.093 ns/op          | 48.321 ns/op          | %10      | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| TreeBidiMap Get 10000          | 686.818 ns/op         | 572.178 ns/op         | %20      | 77.954 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| TreeBidiMap Get 100000         | 8.346.804 ns/op       | 6.604.697 ns/op       | %26      | 797.952 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| TreeBidiMap Put 100            | 23.555 ns/op          | 23.457 ns/op          | %0       | 9.600 B/op           | 6.400 B/op            | %50      | 200 allocs/op     | 200 allocs/op     | %0       |
+| TreeBidiMap Put 1000           | 339.843 ns/op         | 315.734 ns/op         | %8       | 107.904 B/op         | 64.000 B/op           | %69      | 3.488 allocs/op   | 2.000 allocs/op   | %74      |
+| TreeBidiMap Put 10000          | 4.118.347 ns/op       | 3.623.625 ns/op       | %14      | 1.115.920 B/op       | 640.004 B/op          | %74      | 39.488 allocs/op  | 20.000 allocs/op  | %97      |
+| TreeBidiMap Put 100000         | 44.971.067 ns/op      | 40.995.770 ns/op      | %10      | 11.195.917 B/op      | 6.400.010 B/op        | %75      | 399.488 allocs/op | 200.000 allocs/op | %100     |
+| TreeBidiMap Remove 100         | 389,3 ns/op           | 357,2 ns/op           | %9       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| TreeBidiMap Remove 1000        | 8.585 ns/op           | 3.510 ns/op           | %145     | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| TreeBidiMap Remove 10000       | 99.369 ns/op          | 35.065 ns/op          | %183     | 77.952 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| TreeBidiMap Remove 100000      | 1.023.437 ns/op       | 354.091 ns/op         | %189     | 797.957 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| TreeMap Get 100                | 1.783 ns/op           | 2.024 ns/op           | -%12     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| TreeMap Get 1000               | 51.320 ns/op          | 48.677 ns/op          | %5       | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| TreeMap Get 10000              | 683.409 ns/op         | 575.812 ns/op         | %19      | 77.954 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| TreeMap Get 100000             | 7.958.002 ns/op       | 6.489.285 ns/op       | %23      | 797.955 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| TreeMap Put 100                | 2.182 ns/op           | 2.155 ns/op           | %1       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| TreeMap Put 1000               | 58.258 ns/op          | 50.631 ns/op          | %15      | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| TreeMap Put 10000              | 753.072 ns/op         | 662.433 ns/op         | %14      | 77.953 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| TreeMap Put 100000             | 9.180.666 ns/op       | 6.852.508 ns/op       | %34      | 797.956 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| TreeMap Remove 100             | 358,9 ns/op           | 325,6 ns/op           | %10      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| TreeMap Remove 1000            | 8.206 ns/op           | 3.191 ns/op           | %157     | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| TreeMap Remove 10000           | 96.557 ns/op          | 31.861 ns/op          | %203     | 77.952 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| TreeMap Remove 100000          | 982.151 ns/op         | 320.021 ns/op         | %207     | 797.957 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| ArrayQueue Dequeue 100         | 218 ns/op             | 214,3 ns/op           | %2       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayQueue Dequeue 1000        | 2.522 ns/op           | 2.060 ns/op           | %22      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayQueue Dequeue 10000       | 26.175 ns/op          | 20.559 ns/op          | %27      | 1 B/op               | 0 B/op                | ∞        | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayQueue Dequeue 100000      | 1.448.044.834 ns/op   | 742.191 ns/op         | %195.004 | 699.008 B/op         | 250 B/op              | %279.503 | 8 allocs/op       | 0 allocs/op       | ∞        |
+| ArrayQueue Enqueue 100         | 2.232 ns/op           | 497,3 ns/op           | %349     | 6.014 B/op           | 2.082 B/op            | %189     | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayQueue Enqueue 1000        | 29.074 ns/op          | 8.659 ns/op           | %236     | 64.213 B/op          | 30.969 B/op           | %107     | 744 allocs/op     | 0 allocs/op       | ∞        |
+| ArrayQueue Enqueue 10000       | 256.823 ns/op         | 72.981 ns/op          | %252     | 502.756 B/op         | 259.789 B/op          | %94      | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| ArrayQueue Enqueue 100000      | 3.456.854 ns/op       | 742.063 ns/op         | %366     | 6.718.641 B/op       | 2.532.538 B/op        | %165     | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| BinaryQueue Dequeue 100        | 219,3 ns/op           | 247,8 ns/op           | -%12     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| BinaryQueue Dequeue 1000       | 2.071 ns/op           | 2.594 ns/op           | -%20     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| BinaryQueue Dequeue 10000      | 20.551 ns/op          | 22.606 ns/op          | -%9      | 1 B/op               | 0 B/op                | ∞        | 0 allocs/op       | 0 allocs/op       | %0       |
+| BinaryQueue Dequeue 100000     | 205.545 ns/op         | 257.967 ns/op         | -%20     | 126 B/op             | 66 B/op               | %91      | 0 allocs/op       | 0 allocs/op       | %0       |
+| BinaryQueue Enqueue 100        | 4.834 ns/op           | 1.549 ns/op           | %212     | 6.405 B/op           | 2.783 B/op            | %130     | 100 allocs/op     | 0 allocs/op       | ∞        |
+| BinaryQueue Enqueue 1000       | 53.640 ns/op          | 13.898 ns/op          | %286     | 74.019 B/op          | 24.219 B/op           | %206     | 1.000 allocs/op   | 0 allocs/op       | ∞        |
+| BinaryQueue Enqueue 10000      | 468.757 ns/op         | 133.306 ns/op         | %252     | 628.706 B/op         | 230.784 B/op          | %172     | 10.000 allocs/op  | 0 allocs/op       | ∞        |
+| BinaryQueue Enqueue 100000     | 5.096.278 ns/op       | 1.323.769 ns/op       | %285     | 7.050.207 B/op       | 2.326.883 B/op        | %203     | 100.000 allocs/op | 0 allocs/op       | ∞        |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| HashSet Contains 100           | 1.465 ns/op           | 708,4 ns/op           | %107     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashSet Contains 1000          | 10.611 ns/op          | 6.248 ns/op           | %70      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashSet Contains 10000         | 256.814 ns/op         | 179.416 ns/op         | %43      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashSet Contains 100000        | 2.877.410 ns/op       | 2.183.116 ns/op       | %32      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashSet Add 100                | 1.862 ns/op           | 724,7 ns/op           | %157     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashSet Add 1000               | 17.684 ns/op          | 6.263 ns/op           | %182     | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| HashSet Add 10000              | 347.682 ns/op         | 195.879 ns/op         | %77      | 77.952 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| HashSet Add 100000             | 3.987.649 ns/op       | 2.363.547 ns/op       | %69      | 797.962 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| HashSet Remove 100             | 644,2 ns/op           | 295,3 ns/op           | %118     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashSet Remove 1000            | 6.391 ns/op           | 2.882 ns/op           | %122     | 46 B/op              | 10 B/op               | %360     | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashSet Remove 10000           | 77.642 ns/op          | 30.941 ns/op          | %151     | 56.950 B/op          | 11.612 B/op           | %390     | 0 allocs/op       | 0 allocs/op       | %0       |
+| HashSet Remove 100000          | 26.227.605.125 ns/op  | 10.762.679.624 ns/op  | %144     | 80.403.460.904 B/op  | 40.397.527.296 B/op   | %99      | 100.057 allocs/op | 101.802 allocs/op | -%2      |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| TreeSet Contains 100           | 1.844 ns/op           | 2.117 ns/op           | -%13     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| TreeSet Contains 1000          | 52.671 ns/op          | 50.012 ns/op          | %5       | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| TreeSet Contains 10000         | 688.225 ns/op         | 571.616 ns/op         | %20      | 77.954 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| TreeSet Contains 100000        | 8.346.695 ns/op       | 6.569.518 ns/op       | %27      | 797.955 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| TreeSet Add 100                | 2.328 ns/op           | 2.265 ns/op           | %3       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| TreeSet Add 1000               | 58.447 ns/op          | 52.293 ns/op          | %12      | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| TreeSet Add 10000              | 751.150 ns/op         | 606.855 ns/op         | %24      | 77.952 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| TreeSet Add 100000             | 8.659.309 ns/op       | 6.904.362 ns/op       | %25      | 797.955 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| TreeSet Remove 100             | 389,4 ns/op           | 389,5 ns/op           | -%0      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| TreeSet Remove 1000            | 8.524 ns/op           | 3.835 ns/op           | %122     | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| TreeSet Remove 10000           | 100.427 ns/op         | 38.285 ns/op          | %162     | 77.952 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| TreeSet Remove 100000          | 1.013.442 ns/op       | 383.574 ns/op         | %164     | 797.956 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| ArrayStack Pop 100             | 228,3 ns/op           | 231 ns/op             | -%1      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayStack Pop 1000            | 2.125 ns/op           | 2.235 ns/op           | -%5      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayStack Pop 10000           | 20.972 ns/op          | 22.305 ns/op          | -%6      | 1 B/op               | 0 B/op                | ∞        | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayStack Pop 100000          | 219.957 ns/op         | 222.922 ns/op         | -%1      | 132 B/op             | 65 B/op               | %103     | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayStack Push 100            | 2.362 ns/op           | 419,1 ns/op           | %464     | 6.116 B/op           | 1.683 B/op            | %263     | 0 allocs/op       | 0 allocs/op       | %0       |
+| ArrayStack Push 1000           | 26.772 ns/op          | 4.571 ns/op           | %486     | 57.667 B/op          | 28.212 B/op           | %104     | 744 allocs/op     | 0 allocs/op       | ∞        |
+| ArrayStack Push 10000          | 249.355 ns/op         | 68.846 ns/op          | %262     | 474.070 B/op         | 257.870 B/op          | %84      | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| ArrayStack Push 100000         | 3.144.425 ns/op       | 576.439 ns/op         | %445     | 6.559.482 B/op       | 2.453.667 B/op        | %167     | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| LinkedListStack Pop 100        | 232,3 ns/op           | 262,4 ns/op           | -%11     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| LinkedListStack Pop 1000       | 2.246 ns/op           | 2.555 ns/op           | -%12     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| LinkedListStack Pop 10000      | 22.320 ns/op          | 25.690 ns/op          | -%13     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| LinkedListStack Pop 100000     | 223.584 ns/op         | 254.731 ns/op         | -%12     | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| LinkedListStack Push 100       | 3.479 ns/op           | 3.145 ns/op           | %11      | 2.400 B/op           | 1.600 B/op            | %50      | 100 allocs/op     | 100 allocs/op     | %0       |
+| LinkedListStack Push 1000      | 37.550 ns/op          | 34.586 ns/op          | %9       | 29.952 B/op          | 16.000 B/op           | %87      | 1.744 allocs/op   | 1.000 allocs/op   | %74      |
+| LinkedListStack Push 10000     | 374.092 ns/op         | 226.045 ns/op         | %65      | 317.952 B/op         | 160.000 B/op          | %99      | 19.744 allocs/op  | 10.000 allocs/op  | %97      |
+| LinkedListStack Push 100000    | 3.930.625 ns/op       | 3.932.688 ns/op       | -%0      | 3.197.952 B/op       | 1.600.000 B/op        | %100     | 199.744 allocs/op | 100.000 allocs/op | %100     |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| AVLTree Get 100                | 1.794 ns/op           | 1.735 ns/op           | %3       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| AVLTree Get 1000               | 52.251 ns/op          | 45.476 ns/op          | %15      | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| AVLTree Get 10000              | 682.255 ns/op         | 553.651 ns/op         | %23      | 77.954 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| AVLTree Get 100000             | 7.930.279 ns/op       | 6.286.729 ns/op       | %26      | 797.956 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| AVLTree Put 100                | 2.729 ns/op           | 2.475 ns/op           | %10      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| AVLTree Put 1000               | 69.900 ns/op          | 63.906 ns/op          | %9       | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| AVLTree Put 10000              | 850.449 ns/op         | 724.575 ns/op         | %17      | 77.952 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| AVLTree Put 100000             | 10.163.641 ns/op      | 8.392.132 ns/op       | %21      | 797.956 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| AVLTree Remove 100             | 320,5 ns/op           | 220,4 ns/op           | %45      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| AVLTree Remove 1000            | 7.265 ns/op           | 2.096 ns/op           | %247     | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| AVLTree Remove 10000           | 85.562 ns/op          | 20.735 ns/op          | %313     | 77.952 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| AVLTree Remove 100000          | 871.629 ns/op         | 209.643 ns/op         | %316     | 797.956 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| BinaryHeap Pop 100             | 217,5 ns/op           | 219,8 ns/op           | -%1      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| BinaryHeap Pop 1000            | 2.097 ns/op           | 2.099 ns/op           | -%0      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| BinaryHeap Pop 10000           | 20.908 ns/op          | 20.907 ns/op          | %0       | 1 B/op               | 0 B/op                | ∞        | 0 allocs/op       | 0 allocs/op       | %0       |
+| BinaryHeap Pop 100000          | 211.406 ns/op         | 213.072 ns/op         | -%1      | 124 B/op             | 62 B/op               | %100     | 0 allocs/op       | 0 allocs/op       | %0       |
+| BinaryHeap Push 100            | 3.129 ns/op           | 1.344 ns/op           | %133     | 4.916 B/op           | 2.443 B/op            | %101     | 0 allocs/op       | 0 allocs/op       | %0       |
+| BinaryHeap Push 1000           | 31.756 ns/op          | 12.078 ns/op          | %163     | 38.026 B/op          | 21.049 B/op           | %81      | 744 allocs/op     | 0 allocs/op       | ∞        |
+| BinaryHeap Push 10000          | 337.796 ns/op         | 113.516 ns/op         | %198     | 418.223 B/op         | 214.722 B/op          | %95      | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| BinaryHeap Push 100000         | 3.836.439 ns/op       | 1.131.129 ns/op       | %239     | 4.327.811 B/op       | 2.008.788 B/op        | %115     | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| BTree Get 100                  | 2.192 ns/op           | 2.088 ns/op           | %5       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| BTree Get 1000                 | 67.574 ns/op          | 60.504 ns/op          | %12      | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| BTree Get 10000                | 799.961 ns/op         | 692.648 ns/op         | %15      | 77.954 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| BTree Get 100000               | 8.812.033 ns/op       | 7.600.964 ns/op       | %16      | 797.957 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| BTree Put 100                  | 6.049 ns/op           | 3.893 ns/op           | %55      | 3.200 B/op           | 1.600 B/op            | %100     | 100 allocs/op     | 100 allocs/op     | %0       |
+| BTree Put 1000                 | 91.949 ns/op          | 70.728 ns/op          | %30      | 37.952 B/op          | 16.000 B/op           | %137     | 1.744 allocs/op   | 1.000 allocs/op   | %74      |
+| BTree Put 10000                | 1.017.101 ns/op       | 788.238 ns/op         | %29      | 397.958 B/op         | 160.001 B/op          | %149     | 19.744 allocs/op  | 10.000 allocs/op  | %97      |
+| BTree Put 100000               | 11.689.052 ns/op      | 8.940.382 ns/op       | %31      | 3.997.973 B/op       | 1.600.003 B/op        | %150     | 199.744 allocs/op | 100.000 allocs/op | %100     |
+| BTree Remove 100               | 389 ns/op             | 231,4 ns/op           | %68      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| BTree Remove 1000              | 8.517 ns/op           | 2.235 ns/op           | %281     | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| BTree Remove 10000             | 99.440 ns/op          | 22.802 ns/op          | %336     | 77.952 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| BTree Remove 100000            | 1.019.614 ns/op       | 224.342 ns/op         | %354     | 797.961 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| RedBlackTree Get 100           | 1.914 ns/op           | 1.906 ns/op           | %0       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| RedBlackTree Get 1000          | 52.516 ns/op          | 47.911 ns/op          | %10      | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| RedBlackTree Get 10000         | 691.151 ns/op         | 564.442 ns/op         | %22      | 77.954 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| RedBlackTree Get 100000        | 8.007.029 ns/op       | 6.396.226 ns/op       | %25      | 797.956 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| RedBlackTree Put 100           | 2.354 ns/op           | 2.057 ns/op           | %14      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| RedBlackTree Put 1000          | 58.733 ns/op          | 51.150 ns/op          | %15      | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| RedBlackTree Put 10000         | 752.802 ns/op         | 594.066 ns/op         | %27      | 77.953 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| RedBlackTree Put 100000        | 9.052.725 ns/op       | 7.033.469 ns/op       | %29      | 797.954 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| RedBlackTree Remove 100        | 357,7 ns/op           | 265,1 ns/op           | %35      | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| RedBlackTree Remove 1000       | 8.245 ns/op           | 2.586 ns/op           | %219     | 5.952 B/op           | 0 B/op                | ∞        | 744 allocs/op     | 0 allocs/op       | ∞        |
+| RedBlackTree Remove 10000      | 97.490 ns/op          | 25.482 ns/op          | %283     | 77.952 B/op          | 0 B/op                | ∞        | 9.744 allocs/op   | 0 allocs/op       | ∞        |
+| RedBlackTree Remove 100000     | 990.313 ns/op         | 255.761 ns/op         | %287     | 797.955 B/op         | 0 B/op                | ∞        | 99.744 allocs/op  | 0 allocs/op       | ∞        |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| GoSortRandom                   | 0,015 ns/op           | 0,013 ns/op           | %9       | 0 B/op               | 0 B/op                | %0       | 0 allocs/op       | 0 allocs/op       | %0       |
+| **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
+| Averages                       | 484.677.830,044 ns/op | 158.477.047,019 ns/op | %206     | 816.695.882,091 B/op | 410.270.167,112 ns/op | %99      | 22.310,807 ns/op  | 4.416,761 ns/op   | %405     |
+
 
 ### Contributing
 
@@ -1765,8 +1974,3 @@ errcheck ./...
 ### License
 
 This library is distributed under the BSD-style license found in the [LICENSE](https://github.com/ugurcsen/gods-generic/blob/master/LICENSE) file.
-
-### Sponsors
-
-## <a href="https://www.browserstack.com/?ref=gods"><img src="http://www.hajdarevic.net/browserstack.svg" alt="BrowserStack" width="250"/></a>
-[BrowserStack](https://www.browserstack.com/?ref=webhook) is a cloud-based cross-browser testing tool that enables developers to test their websites across various browsers on different operating systems and mobile devices, without requiring users to install virtual machines, devices or emulators.
