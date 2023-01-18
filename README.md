@@ -2,7 +2,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/ugurcsen/gods-generic)](https://goreportcard.com/report/github.com/ugurcsen/gods-generic)
 [![Sourcegraph](https://sourcegraph.com/github.com/ugurcsen/gods-generic/-/badge.svg)](https://sourcegraph.com/github.com/ugurcsen/gods-generic?badge)
 [![Release](https://img.shields.io/github/release/ugurcsen/gods-generic.svg?style=flat-square)](https://github.com/ugurcsen/gods-generic/releases)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ugurcsen_gods-generic&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=gods)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ugurcsen_gods-generic&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ugurcsen_gods-generic)
 [![PyPI](https://img.shields.io/badge/License-BSD_2--Clause-green.svg)](https://github.com/ugurcsen/gods-generic/blob/master/LICENSE)
 
 # GoDS-Generic (Go Data Structures With Generics)
