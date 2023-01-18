@@ -475,7 +475,7 @@ func TestBTreeString(t *testing.T) {
 	}
 }
 
-func benchmarkEnqueue(b *testing.B, queue *Queue[int], size int) {
+func benchmarkEnqueue(b *testing.B, queue *Queue[Element], size int) {
 	for i := 0; i < b.N; i++ {
 		for n := 0; n < size; n++ {
 			queue.Enqueue(Element{})
@@ -483,7 +483,7 @@ func benchmarkEnqueue(b *testing.B, queue *Queue[int], size int) {
 	}
 }
 
-func benchmarkDequeue(b *testing.B, queue *Queue[int], size int) {
+func benchmarkDequeue(b *testing.B, queue *Queue[Element], size int) {
 	for i := 0; i < b.N; i++ {
 		for n := 0; n < size; n++ {
 			queue.Dequeue()
@@ -494,7 +494,9 @@ func benchmarkDequeue(b *testing.B, queue *Queue[int], size int) {
 func BenchmarkBinaryQueueDequeue100(b *testing.B) {
 	b.StopTimer()
 	size := 100
-	queue := NewWith[int](utils.NumberComparator[int])
+	queue := NewWith[Element](func(a, b Element) int {
+		return strings.Compare(a.name, b.name)
+	})
 	for n := 0; n < size; n++ {
 		queue.Enqueue(Element{})
 	}
@@ -505,7 +507,9 @@ func BenchmarkBinaryQueueDequeue100(b *testing.B) {
 func BenchmarkBinaryQueueDequeue1000(b *testing.B) {
 	b.StopTimer()
 	size := 1000
-	queue := NewWith[int](utils.NumberComparator[int])
+	queue := NewWith[Element](func(a, b Element) int {
+		return strings.Compare(a.name, b.name)
+	})
 	for n := 0; n < size; n++ {
 		queue.Enqueue(Element{})
 	}
@@ -516,7 +520,9 @@ func BenchmarkBinaryQueueDequeue1000(b *testing.B) {
 func BenchmarkBinaryQueueDequeue10000(b *testing.B) {
 	b.StopTimer()
 	size := 10000
-	queue := NewWith[int](utils.NumberComparator[int])
+	queue := NewWith[Element](func(a, b Element) int {
+		return strings.Compare(a.name, b.name)
+	})
 	for n := 0; n < size; n++ {
 		queue.Enqueue(Element{})
 	}
@@ -527,7 +533,9 @@ func BenchmarkBinaryQueueDequeue10000(b *testing.B) {
 func BenchmarkBinaryQueueDequeue100000(b *testing.B) {
 	b.StopTimer()
 	size := 100000
-	queue := NewWith[int](utils.NumberComparator[int])
+	queue := NewWith[Element](func(a, b Element) int {
+		return strings.Compare(a.name, b.name)
+	})
 	for n := 0; n < size; n++ {
 		queue.Enqueue(Element{})
 	}
@@ -538,7 +546,9 @@ func BenchmarkBinaryQueueDequeue100000(b *testing.B) {
 func BenchmarkBinaryQueueEnqueue100(b *testing.B) {
 	b.StopTimer()
 	size := 100
-	queue := NewWith[int](utils.NumberComparator[int])
+	queue := NewWith[Element](func(a, b Element) int {
+		return strings.Compare(a.name, b.name)
+	})
 	b.StartTimer()
 	benchmarkEnqueue(b, queue, size)
 }
@@ -546,7 +556,9 @@ func BenchmarkBinaryQueueEnqueue100(b *testing.B) {
 func BenchmarkBinaryQueueEnqueue1000(b *testing.B) {
 	b.StopTimer()
 	size := 1000
-	queue := NewWith[int](utils.NumberComparator[int])
+	queue := NewWith[Element](func(a, b Element) int {
+		return strings.Compare(a.name, b.name)
+	})
 	for n := 0; n < size; n++ {
 		queue.Enqueue(Element{})
 	}
@@ -557,7 +569,9 @@ func BenchmarkBinaryQueueEnqueue1000(b *testing.B) {
 func BenchmarkBinaryQueueEnqueue10000(b *testing.B) {
 	b.StopTimer()
 	size := 10000
-	queue := NewWith[int](utils.NumberComparator[int])
+	queue := NewWith[Element](func(a, b Element) int {
+		return strings.Compare(a.name, b.name)
+	})
 	for n := 0; n < size; n++ {
 		queue.Enqueue(Element{})
 	}
@@ -568,7 +582,9 @@ func BenchmarkBinaryQueueEnqueue10000(b *testing.B) {
 func BenchmarkBinaryQueueEnqueue100000(b *testing.B) {
 	b.StopTimer()
 	size := 100000
-	queue := NewWith[int](utils.NumberComparator[int])
+	queue := NewWith[Element](func(a, b Element) int {
+		return strings.Compare(a.name, b.name)
+	})
 	for n := 0; n < size; n++ {
 		queue.Enqueue(Element{})
 	}
