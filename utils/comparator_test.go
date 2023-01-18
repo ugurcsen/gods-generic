@@ -283,7 +283,7 @@ func TestByteComparator(t *testing.T) {
 		{byte(1), byte(0), 1},
 	}
 	for _, test := range tests {
-		actual := NumberComparator(test[0].(byte), test[1].(byte))
+		actual := ByteComparator(test[0].(byte), test[1].(byte))
 		expected := test[2]
 		if actual != expected {
 			t.Errorf("Got %v expected %v", actual, expected)
