@@ -478,7 +478,7 @@ func TestBTreeString(t *testing.T) {
 func benchmarkEnqueue(b *testing.B, queue *Queue[int], size int) {
 	for i := 0; i < b.N; i++ {
 		for n := 0; n < size; n++ {
-			queue.Enqueue(n)
+			queue.Enqueue(Element{})
 		}
 	}
 }
@@ -496,7 +496,7 @@ func BenchmarkBinaryQueueDequeue100(b *testing.B) {
 	size := 100
 	queue := NewWith[int](utils.NumberComparator[int])
 	for n := 0; n < size; n++ {
-		queue.Enqueue(n)
+		queue.Enqueue(Element{})
 	}
 	b.StartTimer()
 	benchmarkDequeue(b, queue, size)
@@ -507,7 +507,7 @@ func BenchmarkBinaryQueueDequeue1000(b *testing.B) {
 	size := 1000
 	queue := NewWith[int](utils.NumberComparator[int])
 	for n := 0; n < size; n++ {
-		queue.Enqueue(n)
+		queue.Enqueue(Element{})
 	}
 	b.StartTimer()
 	benchmarkDequeue(b, queue, size)
@@ -518,7 +518,7 @@ func BenchmarkBinaryQueueDequeue10000(b *testing.B) {
 	size := 10000
 	queue := NewWith[int](utils.NumberComparator[int])
 	for n := 0; n < size; n++ {
-		queue.Enqueue(n)
+		queue.Enqueue(Element{})
 	}
 	b.StartTimer()
 	benchmarkDequeue(b, queue, size)
@@ -529,7 +529,7 @@ func BenchmarkBinaryQueueDequeue100000(b *testing.B) {
 	size := 100000
 	queue := NewWith[int](utils.NumberComparator[int])
 	for n := 0; n < size; n++ {
-		queue.Enqueue(n)
+		queue.Enqueue(Element{})
 	}
 	b.StartTimer()
 	benchmarkDequeue(b, queue, size)
@@ -548,7 +548,7 @@ func BenchmarkBinaryQueueEnqueue1000(b *testing.B) {
 	size := 1000
 	queue := NewWith[int](utils.NumberComparator[int])
 	for n := 0; n < size; n++ {
-		queue.Enqueue(n)
+		queue.Enqueue(Element{})
 	}
 	b.StartTimer()
 	benchmarkEnqueue(b, queue, size)
@@ -559,7 +559,7 @@ func BenchmarkBinaryQueueEnqueue10000(b *testing.B) {
 	size := 10000
 	queue := NewWith[int](utils.NumberComparator[int])
 	for n := 0; n < size; n++ {
-		queue.Enqueue(n)
+		queue.Enqueue(Element{})
 	}
 	b.StartTimer()
 	benchmarkEnqueue(b, queue, size)
@@ -570,7 +570,7 @@ func BenchmarkBinaryQueueEnqueue100000(b *testing.B) {
 	size := 100000
 	queue := NewWith[int](utils.NumberComparator[int])
 	for n := 0; n < size; n++ {
-		queue.Enqueue(n)
+		queue.Enqueue(Element{})
 	}
 	b.StartTimer()
 	benchmarkEnqueue(b, queue, size)
