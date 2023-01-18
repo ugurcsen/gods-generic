@@ -14,8 +14,8 @@ func main() {
 	m.Put(1, "a")                         // 2->b, 1->a (insertion-order)
 	_, _ = m.Get(2)                       // b, true
 	_, _ = m.Get(3)                       // nil, false
-	_ = m.Values()                        // []interface {}{"b", "a"} (insertion-order)
-	_ = m.Keys()                          // []interface {}{2, 1} (insertion-order)
+	_ = m.Values()                        // []string{"b", "a"} (insertion-order)
+	_ = m.Keys()                          // []int{2, 1} (insertion-order)
 	m.Remove(1)                           // 2->b
 	m.Clear()                             // empty
 	m.Empty()                             // true
