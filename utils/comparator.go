@@ -45,7 +45,7 @@ func StringComparator(a, b string) int {
 	return 0
 }
 
-// IntComparator provides a basic comparison on int
+// NumberComparator provides a basic comparison on int
 func NumberComparator[T ComparableNumber](a, b T) int {
 	aAsserted := a
 	bAsserted := b
