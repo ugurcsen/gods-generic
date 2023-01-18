@@ -11,11 +11,19 @@ Implementation of various data structures and algorithms in Go.
 
 ## Installation
 
+### Generic version
+
 ```bash
 go get github.com/ugurcsen/gods-generic
 ```
 
-## Data Structures
+### Non Generic version
+[https://github.com/emirpasic/gods](https://github.com/emirpasic/gods)
+```bash
+go get github.com/emirpasic/gods
+```
+
+## Data Structures(Generic)
 
 - [x] [Containers](#containers)
   - [x] [Lists](#lists)
