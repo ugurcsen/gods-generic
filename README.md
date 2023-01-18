@@ -1738,7 +1738,7 @@ This takes a while, so test within sub-packages:
 
 `go test -run=NO_TEST -bench . -benchmem  -benchtime 1s ./...`
 
-Non Generic version is [github.com/emirpasic/gods]()
+Non Generic version is [https://github.com/emirpasic/gods](https://github.com/emirpasic/gods)
 
 | **Benchmarks**                 | **Non Generic**       | **Generic**           | **Gain** | **Non Generic**      | **Generic**           | **Gain** | **Non Generic**   | **Generic**       | **Gain** |
 |--------------------------------|-----------------------|-----------------------|----------|----------------------|-----------------------|----------|-------------------|-------------------|----------|
