@@ -9,6 +9,12 @@
 
 Implementation of various data structures and algorithms in Go.
 
+## Installation
+
+```bash
+go get github.com/ugurcsen/gods-generic
+```
+
 ## Data Structures
 
 - [x] [Containers](#containers)
