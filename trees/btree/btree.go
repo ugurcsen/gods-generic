@@ -19,16 +19,17 @@ package btree
 import (
 	"bytes"
 	"fmt"
+	"strings"
+
 	"github.com/ugurcsen/gods-generic/trees"
 	"github.com/ugurcsen/gods-generic/utils"
-	"strings"
 )
 
 // Assert Tree implementation
 var _ trees.Tree[int] = (*Tree[int, int])(nil)
 
 // Tree holds elements of the B-tree
-type Tree[K, T comparable] struct {
+type Tree[K comparable, T any] struct {
 	Root       *Node[K, T]         // Root node
 	Comparator utils.Comparator[K] // Key comparator
 	size       int                 // Total number of keys in the tree
@@ -36,20 +37,20 @@ type Tree[K, T comparable] struct {
 }
 
 // Node is a single element within the tree
-type Node[K, T comparable] struct {
+type Node[K comparable, T any] struct {
 	Parent   *Node[K, T]
 	Entries  []*Entry[K, T] // Contained keys in node
 	Children []*Node[K, T]  // Children nodes
 }
 
 // Entry represents the key-value pair contained within nodes
-type Entry[K, T comparable] struct {
+type Entry[K comparable, T any] struct {
 	Key   K
 	Value T
 }
 
 // NewWith instantiates a B-tree with the order (maximum number of children) and a custom key comparator.
-func NewWith[K, T comparable](order int, comparator utils.Comparator[K]) *Tree[K, T] {
+func NewWith[K comparable, T any](order int, comparator utils.Comparator[K]) *Tree[K, T] {
 	if order < 3 {
 		panic("Invalid order, should be at least 3")
 	}
@@ -57,12 +58,12 @@ func NewWith[K, T comparable](order int, comparator utils.Comparator[K]) *Tree[K
 }
 
 // NewWithNumberComparator instantiates a B-tree with the order (maximum number of children) and the IntComparator, i.e. keys are of type int.
-func NewWithNumberComparator[T comparable](order int) *Tree[int, T] {
+func NewWithNumberComparator[T any](order int) *Tree[int, T] {
 	return NewWith[int, T](order, utils.NumberComparator[int])
 }
 
 // NewWithStringComparator instantiates a B-tree with the order (maximum number of children) and the StringComparator, i.e. keys are of type string.
-func NewWithStringComparator[T comparable](order int) *Tree[string, T] {
+func NewWithStringComparator[T any](order int) *Tree[string, T] {
 	return NewWith[string, T](order, utils.StringComparator)
 }
 
@@ -415,7 +416,7 @@ func (tree *Tree[K, T]) splitRoot() {
 	tree.Root = newRoot
 }
 
-func setParent[K, T comparable](nodes []*Node[K, T], parent *Node[K, T]) {
+func setParent[K comparable, T any](nodes []*Node[K, T], parent *Node[K, T]) {
 	for _, node := range nodes {
 		node.Parent = parent
 	}

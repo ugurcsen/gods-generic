@@ -6,12 +6,13 @@ package avltree
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/ugurcsen/gods-generic/utils"
 	"strings"
 	"testing"
+
+	"github.com/ugurcsen/gods-generic/utils"
 )
 
-func TestAVLTreeGet(t *testing.T) {
+func TestAVLTreeGet1(t *testing.T) {
 	tree := NewWithNumberComparator[string]()
 
 	if actualValue := tree.Size(); actualValue != 0 {
@@ -29,6 +30,50 @@ func TestAVLTreeGet(t *testing.T) {
 	tree.Put(4, "d") // 1->a, 2->b, 3->c, 4->d (in order)
 	tree.Put(5, "e") // 1->a, 2->b, 3->c, 4->d, 5->e (in order)
 	tree.Put(6, "f") // 1->a, 2->b, 3->c, 4->d, 5->e, 6->f (in order)
+	//
+	//  AVLTree
+	//  │       ┌── 6
+	//  │   ┌── 5
+	//  └── 4
+	//      │   ┌── 3
+	//      └── 2
+	//          └── 1
+
+	if actualValue := tree.Size(); actualValue != 6 {
+		t.Errorf("Got %v expected %v", actualValue, 6)
+	}
+
+	if actualValue := tree.GetNode(2).Size(); actualValue != 3 {
+		t.Errorf("Got %v expected %v", actualValue, 3)
+	}
+
+	if actualValue := tree.GetNode(4).Size(); actualValue != 6 {
+		t.Errorf("Got %v expected %v", actualValue, 6)
+	}
+
+	if actualValue := tree.GetNode(7).Size(); actualValue != 0 {
+		t.Errorf("Got %v expected %v", actualValue, 0)
+	}
+}
+
+func TestAVLTreeGet2(t *testing.T) {
+	tree := NewWithNumberComparator[[]string]()
+
+	if actualValue := tree.Size(); actualValue != 0 {
+		t.Errorf("Got %v expected %v", actualValue, 0)
+	}
+
+	if actualValue := tree.GetNode(2).Size(); actualValue != 0 {
+		t.Errorf("Got %v expected %v", actualValue, 0)
+	}
+
+	tree.Put(1, []string{"x"}) // 1->x
+	tree.Put(2, []string{"b"}) // 1->x, 2->b (in order)
+	tree.Put(1, []string{"a"}) // 1->a, 2->b (in order, replacement)
+	tree.Put(3, []string{"c"}) // 1->a, 2->b, 3->c (in order)
+	tree.Put(4, []string{"d"}) // 1->a, 2->b, 3->c, 4->d (in order)
+	tree.Put(5, []string{"e"}) // 1->a, 2->b, 3->c, 4->d, 5->e (in order)
+	tree.Put(6, []string{"f"}) // 1->a, 2->b, 3->c, 4->d, 5->e, 6->f (in order)
 	//
 	//  AVLTree
 	//  │       ┌── 6
@@ -656,9 +701,8 @@ func TestAVLTreeIteratorPrevTo(t *testing.T) {
 	}
 }
 
-func TestAVLTreeSerialization(t *testing.T) {
-	tree := NewWith[string, string](utils.StringComparator)
-	tree = NewWithStringComparator[string]()
+func TestAVLTreeSerialization1(t *testing.T) {
+	tree := NewWithStringComparator[string]()
 	tree.Put("c", "3")
 	tree.Put("b", "2")
 	tree.Put("a", "1")
@@ -672,6 +716,48 @@ func TestAVLTreeSerialization(t *testing.T) {
 			t.Errorf("Got %v expected %v", actualValue, "[a,b,c]")
 		}
 		if actualValue := tree.Values(); actualValue[0] != "1" || actualValue[1] != "2" || actualValue[2] != "3" {
+			t.Errorf("Got %v expected %v", actualValue, "[1,2,3]")
+		}
+		if err != nil {
+			t.Errorf("Got error %v", err)
+		}
+	}
+
+	assert()
+
+	bytes, err := tree.ToJSON()
+	assert()
+
+	err = tree.FromJSON(bytes)
+	assert()
+
+	bytes, err = json.Marshal([]interface{}{"a", "b", "c", tree})
+	if err != nil {
+		t.Errorf("Got error %v", err)
+	}
+
+	tree2 := NewWithStringComparator[int]()
+	err = json.Unmarshal([]byte(`{"a":1,"b":2}`), &tree2)
+	if err != nil {
+		t.Errorf("Got error %v", err)
+	}
+}
+
+func TestAVLTreeSerialization2(t *testing.T) {
+	tree := NewWithStringComparator[[1]string]()
+	tree.Put("c", [1]string{"3"})
+	tree.Put("b", [1]string{"2"})
+	tree.Put("a", [1]string{"1"})
+
+	var err error
+	assert := func() {
+		if actualValue, expectedValue := tree.Size(), 3; actualValue != expectedValue {
+			t.Errorf("Got %v expected %v", actualValue, expectedValue)
+		}
+		if actualValue := tree.Keys(); actualValue[0] != "a" || actualValue[1] != "b" || actualValue[2] != "c" {
+			t.Errorf("Got %v expected %v", actualValue, "[a,b,c]")
+		}
+		if actualValue := tree.Values(); actualValue[0][0] != "1" || actualValue[1][0] != "2" || actualValue[2][0] != "3" {
 			t.Errorf("Got %v expected %v", actualValue, "[1,2,3]")
 		}
 		if err != nil {

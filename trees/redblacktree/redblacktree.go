@@ -13,6 +13,7 @@ package redblacktree
 
 import (
 	"fmt"
+
 	"github.com/ugurcsen/gods-generic/trees"
 	"github.com/ugurcsen/gods-generic/utils"
 )
@@ -27,14 +28,14 @@ const (
 )
 
 // Tree holds elements of the red-black tree
-type Tree[K, T comparable] struct {
+type Tree[K comparable, T any] struct {
 	Root       *Node[K, T]
 	size       int
 	Comparator utils.Comparator[K]
 }
 
 // Node is a single element within the tree
-type Node[K, T comparable] struct {
+type Node[K comparable, T any] struct {
 	Key    K
 	Value  T
 	color  color
@@ -44,17 +45,17 @@ type Node[K, T comparable] struct {
 }
 
 // NewWith instantiates a red-black tree with the custom comparator.
-func NewWith[K, T comparable](comparator utils.Comparator[K]) *Tree[K, T] {
+func NewWith[K comparable, T any](comparator utils.Comparator[K]) *Tree[K, T] {
 	return &Tree[K, T]{Comparator: comparator}
 }
 
 // NewWithNumberComparator instantiates a red-black tree with the IntComparator, i.e. keys are of type int.
-func NewWithNumberComparator[T comparable]() *Tree[int, T] {
+func NewWithNumberComparator[T any]() *Tree[int, T] {
 	return &Tree[int, T]{Comparator: utils.NumberComparator[int]}
 }
 
 // NewWithStringComparator instantiates a red-black tree with the StringComparator, i.e. keys are of type string.
-func NewWithStringComparator[T comparable]() *Tree[string, T] {
+func NewWithStringComparator[T any]() *Tree[string, T] {
 	return &Tree[string, T]{Comparator: utils.StringComparator}
 }
 
@@ -296,7 +297,7 @@ func (node *Node[K, T]) String() string {
 	return fmt.Sprintf("%v", node.Key)
 }
 
-func output[K, T comparable](node *Node[K, T], prefix string, isTail bool, str *string) {
+func output[K comparable, T any](node *Node[K, T], prefix string, isTail bool, str *string) {
 	if node.Right != nil {
 		newPrefix := prefix
 		if isTail {
@@ -541,7 +542,7 @@ func (tree *Tree[K, T]) deleteCase6(node *Node[K, T]) {
 	}
 }
 
-func nodeColor[K, T comparable](node *Node[K, T]) color {
+func nodeColor[K comparable, T any](node *Node[K, T]) color {
 	if node == nil {
 		return black
 	}

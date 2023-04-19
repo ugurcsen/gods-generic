@@ -50,7 +50,7 @@ func (iterator *Iterator[T]) Value() T {
 	if end > iterator.heap.Size() {
 		end = iterator.heap.Size()
 	}
-	tmpHeap := NewWith[T](iterator.heap.Comparator)
+	tmpHeap := NewWith(iterator.heap.Comparator)
 	for n := start; n < end; n++ {
 		value, _ := iterator.heap.list.Get(n)
 		tmpHeap.Push(value)

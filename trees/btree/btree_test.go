@@ -7,9 +7,10 @@ package btree
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/ugurcsen/gods-generic/utils"
 	"strings"
 	"testing"
+
+	"github.com/ugurcsen/gods-generic/utils"
 )
 
 func TestBTreeGet1(t *testing.T) {
@@ -1044,13 +1045,13 @@ func TestBTreeSearch(t *testing.T) {
 	}
 }
 
-func assertValidTree[K, T comparable](t *testing.T, tree *Tree[K, T], expectedSize int) {
+func assertValidTree[K comparable, T any](t *testing.T, tree *Tree[K, T], expectedSize int) {
 	if actualValue, expectedValue := tree.size, expectedSize; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v for tree size", actualValue, expectedValue)
 	}
 }
 
-func assertValidTreeNode[K, T comparable](t *testing.T, node *Node[K, T], expectedEntries int, expectedChildren int, keys []K, hasParent bool) {
+func assertValidTreeNode[K comparable, T any](t *testing.T, node *Node[K, T], expectedEntries int, expectedChildren int, keys []K, hasParent bool) {
 	if actualValue, expectedValue := node.Parent != nil, hasParent; actualValue != expectedValue {
 		t.Errorf("Got %v expected %v for hasParent", actualValue, expectedValue)
 	}
