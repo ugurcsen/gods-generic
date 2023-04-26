@@ -6,11 +6,12 @@ package redblacktreeextended
 
 import (
 	"fmt"
+
 	rbt "github.com/ugurcsen/gods-generic/trees/redblacktree"
 )
 
 // RedBlackTreeExtended to demonstrate how to extend a RedBlackTree to include new functions
-type RedBlackTreeExtended[K, T comparable] struct {
+type RedBlackTreeExtended[K comparable, T any] struct {
 	*rbt.Tree[K, T]
 }
 

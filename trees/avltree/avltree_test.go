@@ -6,9 +6,10 @@ package avltree
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/ugurcsen/gods-generic/utils"
 	"strings"
 	"testing"
+
+	"github.com/ugurcsen/gods-generic/utils"
 )
 
 func TestAVLTreeGet(t *testing.T) {
@@ -657,8 +658,7 @@ func TestAVLTreeIteratorPrevTo(t *testing.T) {
 }
 
 func TestAVLTreeSerialization(t *testing.T) {
-	tree := NewWith[string, string](utils.StringComparator)
-	tree = NewWithStringComparator[string]()
+	tree := NewWithStringComparator[string]()
 	tree.Put("c", "3")
 	tree.Put("b", "2")
 	tree.Put("a", "1")

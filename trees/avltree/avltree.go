@@ -11,6 +11,7 @@ package avltree
 
 import (
 	"fmt"
+
 	"github.com/ugurcsen/gods-generic/trees"
 	"github.com/ugurcsen/gods-generic/utils"
 )
@@ -19,14 +20,14 @@ import (
 var _ trees.Tree[int] = new(Tree[int, int])
 
 // Tree holds elements of the AVL tree.
-type Tree[K, T comparable] struct {
+type Tree[K comparable, T any] struct {
 	Root       *Node[K, T]         // Root node
 	Comparator utils.Comparator[K] // Key comparator
 	size       int                 // Total number of keys in the tree
 }
 
 // Node is a single element within the tree
-type Node[K, T comparable] struct {
+type Node[K comparable, T any] struct {
 	Key      K
 	Value    T
 	Parent   *Node[K, T]    // Parent node
@@ -35,17 +36,17 @@ type Node[K, T comparable] struct {
 }
 
 // NewWith instantiates an AVL tree with the custom comparator.
-func NewWith[K, T comparable](comparator utils.Comparator[K]) *Tree[K, T] {
+func NewWith[K comparable, T any](comparator utils.Comparator[K]) *Tree[K, T] {
 	return &Tree[K, T]{Comparator: comparator}
 }
 
 // NewWithNumberComparator instantiates an AVL tree with the IntComparator, i.e. keys are of type int.
-func NewWithNumberComparator[T comparable]() *Tree[int, T] {
+func NewWithNumberComparator[T any]() *Tree[int, T] {
 	return &Tree[int, T]{Comparator: utils.NumberComparator[int]}
 }
 
 // NewWithStringComparator instantiates an AVL tree with the StringComparator, i.e. keys are of type string.
-func NewWithStringComparator[T comparable]() *Tree[string, T] {
+func NewWithStringComparator[T any]() *Tree[string, T] {
 	return &Tree[string, T]{Comparator: utils.StringComparator}
 }
 
@@ -291,7 +292,7 @@ func (t *Tree[K, T]) remove(key K, qp **Node[K, T]) bool {
 	return false
 }
 
-func removeMin[K, T comparable](qp **Node[K, T], minKey *K, minVal *T) bool {
+func removeMin[K comparable, T any](qp **Node[K, T], minKey *K, minVal *T) bool {
 	q := *qp
 	if q.Children[0] == nil {
 		*minKey = q.Key
@@ -309,7 +310,7 @@ func removeMin[K, T comparable](qp **Node[K, T], minKey *K, minVal *T) bool {
 	return false
 }
 
-func putFix[K, T comparable](c int8, t **Node[K, T]) bool {
+func putFix[K comparable, T any](c int8, t **Node[K, T]) bool {
 	s := *t
 	if s.b == 0 {
 		s.b = c
@@ -330,7 +331,7 @@ func putFix[K, T comparable](c int8, t **Node[K, T]) bool {
 	return false
 }
 
-func removeFix[K, T comparable](c int8, t **Node[K, T]) bool {
+func removeFix[K comparable, T any](c int8, t **Node[K, T]) bool {
 	s := *t
 	if s.b == 0 {
 		s.b = c
@@ -359,14 +360,14 @@ func removeFix[K, T comparable](c int8, t **Node[K, T]) bool {
 	return true
 }
 
-func singlerot[K, T comparable](c int8, s *Node[K, T]) *Node[K, T] {
+func singlerot[K comparable, T any](c int8, s *Node[K, T]) *Node[K, T] {
 	s.b = 0
 	s = rotate(c, s)
 	s.b = 0
 	return s
 }
 
-func doublerot[K, T comparable](c int8, s *Node[K, T]) *Node[K, T] {
+func doublerot[K comparable, T any](c int8, s *Node[K, T]) *Node[K, T] {
 	a := (c + 1) / 2
 	r := s.Children[a]
 	s.Children[a] = rotate(-c, s.Children[a])
@@ -388,7 +389,7 @@ func doublerot[K, T comparable](c int8, s *Node[K, T]) *Node[K, T] {
 	return p
 }
 
-func rotate[K, T comparable](c int8, s *Node[K, T]) *Node[K, T] {
+func rotate[K comparable, T any](c int8, s *Node[K, T]) *Node[K, T] {
 	a := (c + 1) / 2
 	r := s.Children[a]
 	s.Children[a] = r.Children[a^1]
@@ -446,7 +447,7 @@ func (n *Node[K, T]) walk1(a int) *Node[K, T] {
 	return p
 }
 
-func output[K, T comparable](node *Node[K, T], prefix string, isTail bool, str *string) {
+func output[K comparable, T any](node *Node[K, T], prefix string, isTail bool, str *string) {
 	if node.Children[1] != nil {
 		newPrefix := prefix
 		if isTail {
