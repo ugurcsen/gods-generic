@@ -10,7 +10,7 @@ import "github.com/ugurcsen/gods-generic/containers"
 var _ containers.ReverseIteratorWithKey[int, int] = (*Iterator[int, int])(nil)
 
 // Iterator holding the iterator's state
-type Iterator[K comparable, T any] struct {
+type Iterator[K, T comparable] struct {
 	tree     *Tree[K, T]
 	node     *Node[K, T]
 	entry    *Entry[K, T]
