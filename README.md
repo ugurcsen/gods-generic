@@ -1,26 +1,19 @@
-[![GoDoc](https://godoc.org/github.com/ugurcsen/gods-generic?status.svg)](https://godoc.org/github.com/ugurcsen/gods-generic)
-[![Go Report Card](https://goreportcard.com/badge/github.com/ugurcsen/gods-generic)](https://goreportcard.com/report/github.com/ugurcsen/gods-generic)
-[![Sourcegraph](https://sourcegraph.com/github.com/ugurcsen/gods-generic/-/badge.svg)](https://sourcegraph.com/github.com/ugurcsen/gods-generic?badge)
-[![Release](https://img.shields.io/github/release/ugurcsen/gods-generic.svg?style=flat-square)](https://github.com/ugurcsen/gods-generic/releases)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ugurcsen_gods-generic&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ugurcsen_gods-generic)
-[![PyPI](https://img.shields.io/badge/License-BSD_2--Clause-green.svg)](https://github.com/ugurcsen/gods-generic/blob/master/LICENSE)
+[![GoDoc](https://godoc.org/github.com/roehrijn/g-gods)](https://godoc.org/github.com/roehrijn/g-gods)
+[![Go Report Card](https://goreportcard.com/badge/github.com/roehrijn/g-gods)](https://goreportcard.com/report/github.com/roehrijn/g-gods)
+[![Sourcegraph](https://sourcegraph.com/github.com/ugurcsen/gods-generic/-/badge.svg)](https://sourcegraph.com/github.com/roehrijn/g-gods?badge)
+[![Release](https://img.shields.io/github/release/roehrijn/g-gods.svg?style=flat-square)](https://github.com/roehrijn/g-gods/releases)
+[![PyPI](https://img.shields.io/badge/License-BSD_2--Clause-green.svg)](https://github.com/roehrijn/g-gods/blob/master/LICENSE)
 
-# GoDS-Generic (Go Data Structures With Generics)
+# GoDS-Generic (generic Go Data Structures)
 
-Implementation of various data structures and algorithms in Go.
+Implementation of various data structures and algorithms in Go. This is a fork of https://github.com/ugurcsen/gods-generic which in turn is a fork of https://github.com/emirpasic/gods
 
 ## Installation
 
 ### Generic version
 
 ```bash
-go get github.com/ugurcsen/gods-generic
-```
-
-### Non Generic version
-[https://github.com/emirpasic/gods](https://github.com/emirpasic/gods)
-```bash
-go get github.com/emirpasic/gods
+go get github.com/roehrijn/g-gods
 ```
 
 ## Data Structures(Generic)
