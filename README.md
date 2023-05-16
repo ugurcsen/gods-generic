@@ -1,6 +1,5 @@
-[![GoDoc](https://godoc.org/github.com/roehrijn/g-gods)](https://godoc.org/github.com/roehrijn/g-gods)
 [![Go Report Card](https://goreportcard.com/badge/github.com/roehrijn/g-gods)](https://goreportcard.com/report/github.com/roehrijn/g-gods)
-[![Sourcegraph](https://sourcegraph.com/github.com/ugurcsen/gods-generic/-/badge.svg)](https://sourcegraph.com/github.com/roehrijn/g-gods?badge)
+[![Sourcegraph](https://sourcegraph.com/github.com/roehrijn/g-gods/-/badge.svg)](https://sourcegraph.com/github.com/roehrijn/g-gods?badge)
 [![Release](https://img.shields.io/github/release/roehrijn/g-gods.svg?style=flat-square)](https://github.com/roehrijn/g-gods/releases)
 [![PyPI](https://img.shields.io/badge/License-BSD_2--Clause-green.svg)](https://github.com/roehrijn/g-gods/blob/master/LICENSE)
 
