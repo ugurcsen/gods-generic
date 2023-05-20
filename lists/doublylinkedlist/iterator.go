@@ -4,7 +4,7 @@
 
 package doublylinkedlist
 
-import "github.com/ugurcsen/gods-generic/containers"
+import "github.com/roehrijn/g-gods/containers"
 
 // Assert Iterator implementation
 var _ containers.ReverseIteratorWithIndex[int] = (*Iterator[int])(nil)

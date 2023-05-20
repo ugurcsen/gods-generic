@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ugurcsen/gods-generic/utils"
+	"github.com/roehrijn/g-gods/utils"
 )
 
 func TestBTreeGet1(t *testing.T) {

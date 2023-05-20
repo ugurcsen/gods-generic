@@ -10,8 +10,8 @@
 package lists
 
 import (
-	"github.com/ugurcsen/gods-generic/containers"
-	"github.com/ugurcsen/gods-generic/utils"
+	"github.com/roehrijn/g-gods/containers"
+	"github.com/roehrijn/g-gods/utils"
 )
 
 // List interface that all lists implement

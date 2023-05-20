@@ -9,7 +9,7 @@
 // Reference: https://en.wikipedia.org/wiki/Tree_%28data_structure%29
 package trees
 
-import "github.com/ugurcsen/gods-generic/containers"
+import "github.com/roehrijn/g-gods/containers"
 
 // Tree interface that all trees implement
 type Tree[T comparable] interface {

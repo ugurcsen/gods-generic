@@ -13,7 +13,7 @@ package binaryheap
 
 import (
 	"fmt"
-	"github.com/ugurcsen/gods-generic/lists/arraylist"
+	"github.com/roehrijn/g-gods/lists/arraylist"
 	"github.com/ugurcsen/gods-generic/trees"
 	"github.com/ugurcsen/gods-generic/utils"
 	"strings"

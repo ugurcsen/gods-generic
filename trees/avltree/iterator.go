@@ -4,7 +4,7 @@
 
 package avltree
 
-import "github.com/ugurcsen/gods-generic/containers"
+import "github.com/roehrijn/g-gods/containers"
 
 // Assert Iterator implementation
 var _ containers.ReverseIteratorWithKey[int, int] = (*Iterator[int, int])(nil)

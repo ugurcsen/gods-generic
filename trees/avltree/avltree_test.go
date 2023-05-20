@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ugurcsen/gods-generic/utils"
+	"github.com/roehrijn/g-gods/utils"
 )
 
 func TestAVLTreeGet(t *testing.T) {

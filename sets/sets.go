@@ -9,7 +9,7 @@
 // Reference: https://en.wikipedia.org/wiki/Set_%28abstract_data_type%29
 package sets
 
-import "github.com/ugurcsen/gods-generic/containers"
+import "github.com/roehrijn/g-gods/containers"
 
 // Set interface that all sets implement
 type Set[T comparable] interface {

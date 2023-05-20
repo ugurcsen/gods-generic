@@ -13,9 +13,9 @@ package treemap
 
 import (
 	"fmt"
-	"github.com/ugurcsen/gods-generic/maps"
-	rbt "github.com/ugurcsen/gods-generic/trees/redblacktree"
-	"github.com/ugurcsen/gods-generic/utils"
+	"github.com/roehrijn/g-gods/maps"
+	rbt "github.com/roehrijn/g-gods/trees/redblacktree"
+	"github.com/roehrijn/g-gods/utils"
 	"strings"
 )
 

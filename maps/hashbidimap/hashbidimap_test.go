@@ -7,7 +7,7 @@ package hashbidimap
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/ugurcsen/gods-generic/utils"
+	"github.com/roehrijn/g-gods/utils"
 	"strings"
 	"testing"
 )

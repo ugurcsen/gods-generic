@@ -7,9 +7,10 @@ package hashmap
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/ugurcsen/gods-generic/utils"
 	"strings"
 	"testing"
+
+	"github.com/roehrijn/g-gods/utils"
 )
 
 func TestMapPut(t *testing.T) {

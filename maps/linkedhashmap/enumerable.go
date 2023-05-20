@@ -4,7 +4,7 @@
 
 package linkedhashmap
 
-import "github.com/ugurcsen/gods-generic/containers"
+import "github.com/roehrijn/g-gods/containers"
 
 // Assert Enumerable implementation
 var _ containers.EnumerableWithKey[int, int] = (*Map[int, int])(nil)

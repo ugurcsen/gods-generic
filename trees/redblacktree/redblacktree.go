@@ -14,7 +14,7 @@ package redblacktree
 import (
 	"fmt"
 
-	"github.com/ugurcsen/gods-generic/trees"
+	"github.com/roehrijn/g-gods/trees"
 	"github.com/ugurcsen/gods-generic/utils"
 )
 
