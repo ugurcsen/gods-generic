@@ -13,7 +13,7 @@ import (
 var _ containers.ReverseIteratorWithKey[int, int] = (*Iterator[int, int])(nil)
 
 // Iterator holding the iterator's state
-type Iterator[K, T comparable] struct {
+type Iterator[K comparable, T any] struct {
 	iterator rbt.Iterator[K, T]
 }
 

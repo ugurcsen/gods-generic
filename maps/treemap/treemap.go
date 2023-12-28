@@ -23,22 +23,22 @@ import (
 var _ maps.Map[int, int] = (*Map[int, int])(nil)
 
 // Map holds the elements in a red-black tree
-type Map[K, T comparable] struct {
+type Map[K comparable, T any] struct {
 	tree *rbt.Tree[K, T]
 }
 
 // NewWith instantiates a tree map with the custom comparator.
-func NewWith[K, T comparable](comparator utils.Comparator[K]) *Map[K, T] {
+func NewWith[K comparable, T any](comparator utils.Comparator[K]) *Map[K, T] {
 	return &Map[K, T]{tree: rbt.NewWith[K, T](comparator)}
 }
 
 // NewWithNumberComparator instantiates a tree map with the IntComparator, i.e. keys are of type int.
-func NewWithNumberComparator[T comparable]() *Map[int, T] {
+func NewWithNumberComparator[T any]() *Map[int, T] {
 	return &Map[int, T]{tree: rbt.NewWithNumberComparator[T]()}
 }
 
 // NewWithStringComparator instantiates a tree map with the StringComparator, i.e. keys are of type string.
-func NewWithStringComparator[T comparable]() *Map[string, T] {
+func NewWithStringComparator[T any]() *Map[string, T] {
 	return &Map[string, T]{tree: rbt.NewWithStringComparator[T]()}
 }
 
