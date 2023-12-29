@@ -20,12 +20,12 @@ import (
 var _ maps.Map[int, int] = (*Map[int, int])(nil)
 
 // Map holds the elements in go's native map
-type Map[K, T comparable] struct {
+type Map[K comparable, T any] struct {
 	m map[K]T
 }
 
 // New instantiates a hash map.
-func New[K, T comparable]() *Map[K, T] {
+func New[K comparable, T any]() *Map[K, T] {
 	return &Map[K, T]{m: make(map[K]T)}
 }
 
